@@ -40,8 +40,9 @@ export function Body() {
                   <Button
                     onClick={handleDashboard}
                     className={['button', 'primary-button']}
-                    text="Começar agora"
-                  ></Button>
+                  >
+                    Começar agora
+                  </Button>
                 </div>
               </div>
             </div>

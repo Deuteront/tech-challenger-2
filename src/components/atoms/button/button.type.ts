@@ -1,6 +1,12 @@
-export type props = {
+import { ReactNode } from 'react';
+
+export type Props = {
   onClick: () => void;
   className: string[];
   icon?: string;
-  text?: string;
-} & ({ icon: string; text?: string } | { icon?: never; text: string });
+  disabled?: boolean;
+  children?: ReactNode;
+} & (
+  | { icon: string; children?: ReactNode }
+  | { icon?: never; children: ReactNode }
+);

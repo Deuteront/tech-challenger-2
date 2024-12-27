@@ -2,9 +2,20 @@ import Image from 'next/image';
 import React from 'react';
 import './style.scss';
 
-type props = { color?: 'white' };
+type props = {
+  color?: 'white';
+  avoidText?: boolean;
+  sizeIcon?: {
+    width: number;
+    height: number;
+  };
+};
 
-export function Logo({ color }: props) {
+export function Logo({
+  color,
+  avoidText,
+  sizeIcon = { width: 17, height: 17 },
+}: props) {
   const logos = {
     white: {
       icon: '/svgs/meow_cash_icon_white.svg',
@@ -18,8 +29,13 @@ export function Logo({ color }: props) {
   const { icon, text } = color === 'white' ? logos.white : logos.pink;
   return (
     <div className="logo">
-      <Image src={icon} width="17" height="17" alt="icon" />
-      <Image src={text} width="106" height="30" alt="icon" />
+      <Image
+        src={icon}
+        width={sizeIcon?.width}
+        height={sizeIcon?.height}
+        alt="icon"
+      />
+      {!avoidText && <Image src={text} width="106" height="30" alt="icon" />}
     </div>
   );
 }

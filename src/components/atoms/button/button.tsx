@@ -1,15 +1,25 @@
 import React from 'react';
-import { props } from '@/components/atoms/button/button.type';
+import { Props } from '@/components/atoms/button/button.type';
 import './style.scss';
 import Image from 'next/image';
 
-export function Button({ onClick, text, className, icon }: props) {
+export function Button({
+  onClick,
+  className,
+  icon,
+  disabled,
+  children,
+}: Props) {
   function removeIconExtension(iconName: string): string {
     return iconName.replace(/\.[^/.]+$/, '');
   }
 
   return (
-    <button className={className.join(' ')} onClick={onClick}>
+    <button
+      className={className.join(' ') + (disabled ? ' disabled-button' : '')}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {icon ? (
         <Image
           src={`/svgs/${icon}`}
@@ -20,7 +30,7 @@ export function Button({ onClick, text, className, icon }: props) {
       ) : (
         ''
       )}
-      {text ? text : ''}
+      {children ? children : ''}
     </button>
   );
 }

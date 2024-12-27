@@ -6,7 +6,7 @@ export type Option = {
   text: string;
 };
 
-export type props = {
+export type Props = {
   value: string;
   onChange: (event: SelectChangeEvent, child: ReactNode) => void;
   options: Option[];

@@ -49,9 +49,10 @@ export function Footer() {
                 </div>
                 <Button
                   onClick={() => console.log('SEND!!!!!!')}
-                  text="Enviar"
                   className={['send-button', 'button']}
-                />
+                >
+                  Enviar
+                </Button>
                 <span className="info-mirror">
                   Ao cadastrar-se você autoriza a Meowcash a enviar conteúdos
                   informativos e publicitários, nos termos da nossa Política de

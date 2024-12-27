@@ -1,5 +1,5 @@
 import React from 'react';
-import { props } from '@/components/atoms/select/select.type';
+import { Props } from '@/components/atoms/select/select.type';
 import './style.scss';
 import {
   FormControl,
@@ -16,7 +16,7 @@ export function CustomSelect({
   label,
   helperText,
   error,
-}: props) {
+}: Props) {
   return (
     <FormControl fullWidth error={error}>
       <InputLabel>{label}</InputLabel>

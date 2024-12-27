@@ -57,6 +57,11 @@ html, body {
   font-family: $custom-font;
   background-color: $background-color !important;
 
+  .MuiButtonBase-root {
+    color: #AB5373 !important;
+    opacity: .70;
+  }
+
   .MuiOutlinedInput-root {
     font-family: $custom-font !important;
     color: $primary-color;

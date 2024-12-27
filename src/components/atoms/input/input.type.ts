@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type props = {
+export type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   value?: string;
