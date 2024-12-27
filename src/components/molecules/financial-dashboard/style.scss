@@ -1,0 +1,83 @@
+@import '../../../app/variables';
+
+.financialDashboard {
+  border-radius: 12px;
+  border: 1px solid var(--Schemes-Outline-Variant, #CAC4D0);
+  background: var(--Background-Wrap, #FFF);
+  display: flex;
+  padding: 28.443px;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+
+  @media only screen and (max-width: $mobile_width) {
+    max-width: unset;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-card-Dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Label-Default, #212533);
+    font-size: 14px;
+    line-height: 150%;
+    @media only screen and (max-width: $mobile_width) {
+      font-size: 18.887px;
+    }
+  }
+
+  .value-card-dashboard {
+    color: var(--Label-Default, #212533);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    text-transform: uppercase;
+  }
+
+
+  .desc-card-dashboard {
+    color: var(--Small-Default, #888B99);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    @media only screen and (max-width: $mobile_width) {
+      font-size: 18.887px;
+    }
+  }
+}
+
+.financial-dashboard-list {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  row-gap: 14px;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: $mobile_width) {
+    flex-direction: column;
+  }
+
+  @media only screen and (min-width: $mobile_width) and (max-width: $tablet_width) {
+    .financialDashboard:last-child {
+      flex-basis: 100%;
+    }
+  }
+}
+
+.context-card-Dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

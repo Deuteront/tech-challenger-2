@@ -1,0 +1,52 @@
+@import '../../../app/variables';
+
+
+.MuiFormControl-root {
+  .MuiSelect-select {
+    font-family: $custom-font !important;
+    color: $primary-color;
+
+    &:hover {
+      background-color: lighten($secondary-color, 5%);
+    }
+  }
+
+  .MuiInputBase-input {
+    font-family: $custom-font !important;
+    color: #79747E;
+
+    &::placeholder {
+      color: #79747E !important;
+    }
+  }
+
+  .MuiSelect-icon {
+    color: $primary-color;
+  }
+
+  .MuiFormControl-root {
+    width: 100%;
+  }
+}
+
+
+.MuiPaper-root.MuiMenu-paper {
+  font-family: $custom-font !important;
+  background-color: $background-color !important;
+  color: $primary-color !important;
+
+  .MuiMenuItem-root {
+    font-family: $custom-font !important;
+    color: $primary-color !important;
+
+    &:hover {
+      background-color: lighten($background-color, 10%) !important;
+    }
+
+    &.Mui-selected {
+      background-color: $primary-color !important;
+      color: white !important;
+    }
+
+  }
+}

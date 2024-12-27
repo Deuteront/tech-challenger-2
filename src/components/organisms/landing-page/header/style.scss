@@ -1,0 +1,27 @@
+@import '../../../../app/variables';
+
+.header {
+  background-color: $secondary-color;
+
+  .container {
+    display: flex;
+    height: 58px;
+    gap: 48px;
+    align-items: center;
+  }
+}
+
+.login {
+  display: flex;
+  gap: 16px;
+  min-width: 0;
+
+  @media only screen and (max-width: $mobile_width) {
+    display: none;
+  }
+
+  @media only screen and (min-width: $mobile_width) and (max-width: $tablet_width) {
+    display: none;
+  }
+
+}

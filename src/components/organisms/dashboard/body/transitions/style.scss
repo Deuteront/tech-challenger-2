@@ -1,0 +1,117 @@
+@import '../../../../../app/variables';
+
+.transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .transactions-title {
+    color: #AB5373;
+    font-size: 22px;
+    font-weight: 700;
+  }
+}
+
+.transactions-none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  color: #28262B;
+  font-size: 16px;
+  font-weight: 400;
+  flex-direction: column;
+}
+
+.transactions-list {
+  height: 242px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .transactions-list-title {
+    color: #28262B;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 36vw;
+  }
+
+  .transactions-type {
+    font-size: 14px;
+    color: #635D6C;
+  }
+}
+
+.button.add-button-transitions {
+  padding: 8px;
+}
+
+.transaction-price {
+  font-size: var(--Title-Medium-Size, 16px);
+  font-style: normal;
+  font-weight: 600;
+  line-height: var(--Title-Medium-Line-Height, 24px);
+  letter-spacing: var(--Title-Medium-Tracking, 0.15px);
+  text-align: end;
+
+  &.outgoing {
+    color: #B3261E;
+  }
+
+  &.incoming {
+    color: #3E6642;
+  }
+}
+
+.transaction {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-top: 1px solid var(--Schemes-Outline-Variant, #CAC4D0);
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.transaction-title {
+  display: flex;
+  gap: 20px;
+  align-self: center;
+  align-items: center;
+}
+
+.transaction-desc {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.transaction-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.transaction-button {
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+}
+
+.transaction-date {
+  text-align: end;
+  color: #635D6C;
+  font-size: var(--Title-Small-Size, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--Title-Medium-Line-Height, 24px);
+  letter-spacing: var(--Title-Medium-Tracking, 0.15px);
+}

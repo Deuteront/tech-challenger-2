@@ -1,0 +1,123 @@
+@import '../../../../app/variables';
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.initial-scream {
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 54px);
+  flex-direction: column;
+  gap: 64px;
+  z-index: 1;
+  @media only screen and (max-width: 400px) {
+    height: auto;
+  }
+}
+
+.container-invite {
+  padding: 64px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  flex: 1 1;
+
+  .invite {
+    display: flex;
+    padding: 0 16px;
+    gap: 16px;
+    flex-direction: column;
+
+    .title {
+      color: #40454F;
+      font-size: 50px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 120%;
+    }
+
+    .sub-title {
+      color: #40454F;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 120%;
+    }
+  }
+
+
+}
+
+.wave {
+  position: relative;
+  width: 100%;
+  background: url('/svgs/wave_login.svg') top repeat-x;
+  padding-top: 50px;
+
+  .wave-login {
+    overflow-x: hidden;
+    padding: 60px;
+    height: 250px;
+    width: -webkit-fill-available;
+    background-color: $border-color;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .has-login {
+      color: #28262B;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 120%;
+    }
+
+    .login {
+      color: #381926;
+      text-align: center;
+      font-size: var(--Label-Large-Size, 14px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: var(--Label-Large-Line-Height, 20px);
+      letter-spacing: var(--Label-Large-Tracking, 0.1px);
+      text-decoration-line: underline;
+    }
+
+
+  }
+}
+
+.advantage-list {
+  display: flex;
+  justify-content: center;
+  padding: 64px 16px;
+  gap: 24px;
+  @media only screen and (max-width: $mobile_width) {
+    flex-direction: column;
+  }
+}
+
+.cat-paw {
+  position: absolute;
+  right: 22%;
+  bottom: 42%;
+  z-index: -1;
+
+  @media only screen and (max-width: $mobile_width) {
+    right: -10%;
+    bottom: 51%;
+  }
+
+  @media only screen and (max-width: 500px) {
+    right: -45%;
+    bottom: 31%;
+  }
+
+  @media only screen and (min-width: $mobile_width) and (max-width: $tablet_width) {
+    right: -7%;
+    bottom: 47%;
+  }
+}
