@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Props = {
+export interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   value?: string;
@@ -8,4 +8,4 @@ export type Props = {
   helperText?: string;
   className?: string;
   type?: string;
-};
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 import './style.scss';
 import Image from 'next/image';
-import { props } from '@/components/molecules/advantage/advantage.type';
+import { Props } from '@/components/molecules/advantage/advantage.interface';
 
-export function Advantage({ image, text, icon }: props) {
+export function Advantage({ image, text, icon }: Props) {
   return (
     <div className="advantage">
       <div className="icon">

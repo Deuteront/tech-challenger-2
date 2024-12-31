@@ -1,15 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-import { transaction } from '@/components/organisms/modal-transaction/modal-transaction.type';
+import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import {
   generateTransactionId,
   transactionsName,
 } from '@/components/organisms/modal-transaction/constants';
 
 interface TransactionContextType {
-  transactions: transaction[];
-  addTransaction: (newTransaction: transaction) => boolean;
-  removeTransaction: (id: transaction['id']) => void;
-  editTransaction: (updatedTransaction: transaction) => boolean;
+  transactions: Transaction[];
+  addTransaction: (newTransaction: Transaction) => boolean;
+  removeTransaction: (id: Transaction['id']) => void;
+  editTransaction: (updatedTransaction: Transaction) => boolean;
 }
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -19,12 +19,12 @@ const TransactionContext = createContext<TransactionContextType | undefined>(
 export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [transactions, setTransactions] = useState<transaction[]>(() => {
+  const [transactions, setTransactions] = useState<Transaction[]>(() => {
     const storedTransactions = localStorage.getItem(transactionsName);
     return storedTransactions ? JSON.parse(storedTransactions) : [];
   });
 
-  const addTransaction = (newTransaction: transaction) => {
+  const addTransaction = (newTransaction: Transaction) => {
     setTransactions((prev) => {
       const updatedTransactions = [
         ...prev,
@@ -42,7 +42,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
     return true;
   };
 
-  const removeTransaction = (id: transaction['id']) => {
+  const removeTransaction = (id: Transaction['id']) => {
     setTransactions((prev) => {
       const updatedTransactions = prev.filter(
         (transaction) => transaction.id !== id
@@ -55,7 +55,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
-  const editTransaction = (updatedTransaction: transaction) => {
+  const editTransaction = (updatedTransaction: Transaction) => {
     setTransactions((prev) => {
       const updatedTransactions = prev.map((transaction) =>
         transaction.id === updatedTransaction.id

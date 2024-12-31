@@ -1,12 +1,12 @@
 import React from 'react';
-import { transactionsDetails } from './transactions-list.type';
+import { Props } from './transactions-list.interface';
 import { TransactionsDetails } from './transactions';
 
 export function TransactionsDetailsList({
   transactionsList,
   edit,
   exclude,
-}: transactionsDetails) {
+}: Props) {
   return (
     <div className="transactions-list">
       {transactionsList.map((item, index) => (

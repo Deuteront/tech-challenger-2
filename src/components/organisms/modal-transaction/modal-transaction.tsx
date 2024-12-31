@@ -13,16 +13,16 @@ import {
   ESTABLISHMENT_TYPE_OPTIONS,
 } from './constants';
 import {
-  errors,
-  transaction,
-} from '@/components/organisms/modal-transaction/modal-transaction.type';
+  Errors,
+  Transaction,
+} from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import dayjs from 'dayjs';
 import { Input } from '@/components/atoms/input/input';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 
 interface ModalContentProps {
   closeModal: () => void;
-  transactionId?: transaction['id'];
+  transactionId?: Transaction['id'];
 }
 
 const ModalTransaction: React.FC<ModalContentProps> = ({
@@ -30,8 +30,8 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
   transactionId,
 }) => {
   const [step, setStep] = useState(0);
-  const [errors, setErrors] = useState<errors>({});
-  const [transactionData, setTransactionData] = useState<transaction>(
+  const [errors, setErrors] = useState<Errors>({});
+  const [transactionData, setTransactionData] = useState<Transaction>(
     initialTransactionData
   );
   const { transactions, editTransaction, addTransaction } =
@@ -45,7 +45,7 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
   }, [transactionId, transactions]);
 
   const validateStep = () => {
-    const newErrors: errors = {};
+    const newErrors: Errors = {};
 
     if (step === 0) {
       if (!transactionData.value || transactionData.value === 0) {

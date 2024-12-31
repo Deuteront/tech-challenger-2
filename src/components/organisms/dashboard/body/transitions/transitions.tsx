@@ -1,21 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { Button } from '@/components/atoms/button/button';
 import ModalWrapper from '@/components/atoms/modal-wrapper/modal-wrapper';
 import ModalTransaction from '@/components/organisms/modal-transaction/modal-transaction';
 import { TransactionsDetailsList } from './transactions-list';
-import { transaction } from '@/components/organisms/modal-transaction/modal-transaction.type';
+import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 
 export function Transitions() {
   const { transactions, removeTransaction } = useTransactionContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionId, setTransactionId] =
-    useState<transaction['id']>(undefined);
+    useState<Transaction['id']>(undefined);
 
-  const openModal = (id?: transaction['id']) => {
+  const openModal = (id?: Transaction['id']) => {
     setTransactionId(id);
     setIsModalOpen(true);
   };
@@ -24,7 +24,7 @@ export function Transitions() {
     setIsModalOpen(false);
   };
 
-  const exclude = (id: transaction['id']) => {
+  const exclude = (id: Transaction['id']) => {
     removeTransaction(id);
   };
 

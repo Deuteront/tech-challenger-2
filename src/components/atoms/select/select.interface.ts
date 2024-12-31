@@ -1,16 +1,16 @@
 import { SelectChangeEvent } from '@mui/material';
 import { ReactNode } from 'react';
 
-export type Option = {
+export interface Option {
   value: string;
   text: string;
-};
+}
 
-export type Props = {
+export interface Props {
   value: string;
   onChange: (event: SelectChangeEvent, child: ReactNode) => void;
   options: Option[];
   label: string;
   error?: boolean;
   helperText?: string;
-};
+}

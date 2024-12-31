@@ -1,8 +1,8 @@
 import React from 'react';
-import { propsAdvantageList } from '@/components/molecules/advantage/advantage.type';
+import { PropsAdvantageList } from '@/components/molecules/advantage/advantage.interface';
 import { Advantage } from '@/components/molecules/advantage/advantage';
 
-export function AdvantageList({ advantage, className }: propsAdvantageList) {
+export function AdvantageList({ advantage, className }: PropsAdvantageList) {
   return (
     <div className={className}>
       {advantage.map((item, index) => (

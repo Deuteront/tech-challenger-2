@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button } from '@/components/atoms/button/button';
 import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
-import { transactionModal } from '@/components/organisms/modal-transaction/modal-transaction.type';
+import { TransactionModal } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import {
   getArithmeticOperator,
   getIconEstablishment,
@@ -15,7 +15,7 @@ export function TransactionsDetails({
   transaction,
   edit,
   exclude,
-}: transactionModal) {
+}: TransactionModal) {
   const {
     transactionDate,
     paymentMethod,

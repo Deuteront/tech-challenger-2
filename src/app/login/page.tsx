@@ -4,8 +4,9 @@ import React from 'react';
 import { Header } from '@/components/organisms/landing-page/header/header';
 import { Input } from '@/components/atoms/input/input';
 import { Logo } from '@/components/organisms/logo/logo';
-import './style.scss';
 import { Button } from '@/components/atoms/button/button';
+import './style.scss';
+import { UserService } from '@/service/user';
 
 const Login: React.FC = () => {
   const [formState, setFormState] = React.useState({
@@ -44,12 +45,20 @@ const Login: React.FC = () => {
     }));
   };
 
-  const sendLoginRequest = () => {
+  const sendLoginRequest = async () => {
     if (formState.isEmailValid && formState.isPasswordValid) {
-      console.log('Login com sucesso:', {
-        email: formState.email,
-        password: formState.password,
-      });
+      try {
+        const response = await UserService.authenticateUser(
+          formState.email,
+          formState.password
+        );
+        console.log('Login bem-sucedido:', response);
+
+        localStorage.setItem('authToken', response.result.token);
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao autenticar. Verifique suas credenciais.');
+      }
     }
   };
 

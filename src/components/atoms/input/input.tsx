@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Props } from '@/components/atoms/input/input.type';
+import { Props } from '@/components/atoms/input/input.interface';
 import './style.scss';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';

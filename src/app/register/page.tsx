@@ -7,6 +7,7 @@ import { Input } from '@/components/atoms/input/input';
 import { Logo } from '@/components/organisms/logo/logo';
 import './style.scss';
 import { Button } from '@/components/atoms/button/button';
+import { UserService } from '@/service/user';
 
 const Register: React.FC = () => {
   const [formState, setFormState] = React.useState({
@@ -61,16 +62,23 @@ const Register: React.FC = () => {
     }));
   };
 
-  const sendRegisterRequest = () => {
+  const sendRegisterRequest = async () => {
     if (
       formState.isEmailValid &&
       formState.isPasswordValid &&
       formState.isConfirmPasswordValid
     ) {
-      console.log('Cadastro com sucesso:', {
-        email: formState.email,
-        password: formState.password,
-      });
+      try {
+        const response = await UserService.createUser(
+          formState.name,
+          formState.email,
+          formState.password
+        );
+        console.log('Cadastro realizado com sucesso:', response);
+        router.push('/login');
+      } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+      }
     }
   };
 

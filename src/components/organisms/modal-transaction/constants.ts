@@ -1,8 +1,8 @@
-import { transaction } from '@/components/organisms/modal-transaction/modal-transaction.type';
+import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { getFromStorage, saveToStorage } from '@/utils/storage';
 import dayjs from 'dayjs';
 
-export const initialTransactionData: transaction = {
+export const initialTransactionData: Transaction = {
   value: 0.0,
   movement: '',
   paymentMethod: '',
@@ -14,8 +14,8 @@ export const initialTransactionData: transaction = {
 export const handleNext = (
   step: number,
   setStep: (step: number) => void,
-  transactionData: transaction,
-  closeModal: (transaction: transaction) => void
+  transactionData: Transaction,
+  closeModal: (transaction: Transaction) => void
 ) => {
   if (step < 2) {
     setStep(step + 1);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Props } from '@/components/atoms/button/button.type';
+import { Props } from '@/components/atoms/button/button.interface';
 import './style.scss';
 import Image from 'next/image';
 
