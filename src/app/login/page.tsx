@@ -7,8 +7,14 @@ import { Logo } from '@/components/organisms/logo/logo';
 import { Button } from '@/components/atoms/button/button';
 import './style.scss';
 import { UserService } from '@/service/user';
+import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
+import { User } from '@/service/interfaces';
+import { saveToStorage } from '@/utils/storage';
 
 const Login: React.FC = () => {
+  const router = useRouter();
+
   const [formState, setFormState] = React.useState({
     email: '',
     password: '',
@@ -52,14 +58,19 @@ const Login: React.FC = () => {
           formState.email,
           formState.password
         );
-        console.log('Login bem-sucedido:', response);
-
-        localStorage.setItem('authToken', response.result.token);
+        saveToStorage('authToken', response.result.token);
+        const user = jwtDecode(response.result.token) as User;
+        saveToStorage('username', user.username);
+        router.push('/dashboard');
       } catch (error) {
         console.error('Erro ao fazer login:', error);
         alert('Erro ao autenticar. Verifique suas credenciais.');
       }
     }
+  };
+
+  const goToRegister = () => {
+    router.push('/register');
   };
 
   return (
@@ -98,7 +109,7 @@ const Login: React.FC = () => {
             >
               Entrar
             </Button>
-            <div className="login-register">
+            <div className="login-register" onClick={goToRegister}>
               Não tem uma conta? <span className="click-text">Cadastre-se</span>
             </div>
           </div>

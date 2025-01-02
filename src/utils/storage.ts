@@ -8,7 +8,7 @@ export const saveToStorage = <T>(key: string, data: T): void => {
   }
 };
 
-export const getFromStorage = <T>(key: string): T | null => {
+export const getFromStorage = <T>(key: string): T | string | null => {
   if (typeof window === 'undefined') {
     console.warn(
       `Attempted to get from localStorage outside of browser for key "${key}".`
@@ -21,8 +21,7 @@ export const getFromStorage = <T>(key: string): T | null => {
     try {
       return JSON.parse(storedData) as T;
     } catch (error) {
-      console.error(`Error parsing data for key "${key}":`, error);
-      return null;
+      return storedData;
     }
   }
   return null;

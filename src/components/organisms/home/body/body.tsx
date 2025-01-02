@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { WelcomeMessage } from '@/components/organisms/home/welcome-message/welcome-message';
 import { FinancialDashboardList } from '@/components/molecules/financial-dashboard/financial-deshboard-list';
 import { CardBalanceActual } from '@/components/molecules/card-balance-actual/card-balance-actual';
 import { Transitions } from '@/components/organisms/dashboard/body/transitions/transitions';
-import { ESTABLISHMENT_TYPE_SAVE } from '@/components/organisms/modal-transaction/constants';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 
 export function Body() {
@@ -14,22 +13,16 @@ export function Body() {
   const financialHistoryLastMouth = 'Relação desde o inicio';
   const [visibleValues, setVisibleValues] = useState<boolean>(true);
 
-  const { totalIncoming, totalOutgoing, totalSaved } = transactions?.reduce(
+  const { totalIncoming, totalOutgoing } = transactions?.reduce(
     (acc, transaction) => {
       if (transaction.movement === 'incoming') {
         acc.totalIncoming += transaction.value;
-        if (transaction.establishmentType === ESTABLISHMENT_TYPE_SAVE) {
-          acc.totalSaved += transaction.value;
-        }
       } else if (transaction.movement === 'outgoing') {
         acc.totalOutgoing += transaction.value;
-        if (transaction.establishmentType === ESTABLISHMENT_TYPE_SAVE) {
-          acc.totalSaved -= transaction.value;
-        }
       }
       return acc;
     },
-    { totalIncoming: 0, totalOutgoing: 0, totalSaved: 0 }
+    { totalIncoming: 0, totalOutgoing: 0 }
   );
 
   const financialDashboards = [
@@ -44,12 +37,6 @@ export function Body() {
       textTitle: 'Saídas',
       textValue: totalOutgoing?.toFixed(2) || '0',
       financialHistory: financialHistoryLastMouth,
-    },
-    {
-      icon: 'indicador_card_Icon_pig',
-      textTitle: 'Total guardado',
-      textValue: totalSaved?.toFixed(2) || '0',
-      financialHistory: '',
     },
   ];
 

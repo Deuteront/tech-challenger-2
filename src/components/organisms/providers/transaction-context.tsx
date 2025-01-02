@@ -4,6 +4,7 @@ import {
   generateTransactionId,
   transactionsName,
 } from '@/components/organisms/modal-transaction/constants';
+import { getFromStorage, saveToStorage } from '@/utils/storage';
 
 interface TransactionContextType {
   transactions: Transaction[];
@@ -20,8 +21,10 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
-    const storedTransactions = localStorage.getItem(transactionsName);
-    return storedTransactions ? JSON.parse(storedTransactions) : [];
+    const storedTransactions = getFromStorage(
+      transactionsName
+    ) as Transaction[];
+    return storedTransactions ? storedTransactions : [];
   });
 
   const addTransaction = (newTransaction: Transaction) => {
@@ -33,10 +36,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
           id: generateTransactionId(),
         },
       ];
-      localStorage.setItem(
-        transactionsName,
-        JSON.stringify(updatedTransactions)
-      );
+      saveToStorage(transactionsName, updatedTransactions);
       return updatedTransactions;
     });
     return true;
@@ -47,10 +47,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
       const updatedTransactions = prev.filter(
         (transaction) => transaction.id !== id
       );
-      localStorage.setItem(
-        transactionsName,
-        JSON.stringify(updatedTransactions)
-      );
+      saveToStorage(transactionsName, updatedTransactions);
       return updatedTransactions;
     });
   };
@@ -62,10 +59,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
           ? updatedTransaction
           : transaction
       );
-      localStorage.setItem(
-        transactionsName,
-        JSON.stringify(updatedTransactions)
-      );
+      saveToStorage(transactionsName, updatedTransactions);
       return updatedTransactions;
     });
     return true;
