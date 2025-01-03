@@ -1,18 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Header } from '@/components/organisms/landing-page/header/header';
 import { Input } from '@/components/atoms/input/input';
 import { Logo } from '@/components/organisms/logo/logo';
 import { Button } from '@/components/atoms/button/button';
 import './style.scss';
-import { UserService } from '@/service/user';
 import { useRouter } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode';
-import { User } from '@/service/interfaces';
-import { saveToStorage } from '@/utils/storage';
+import { Header } from '@/components/organisms/home/header/header';
+import { useAuth } from '@/app/auth-context';
 
 const Login: React.FC = () => {
+  const { login } = useAuth();
   const router = useRouter();
 
   const [formState, setFormState] = React.useState({
@@ -51,22 +49,8 @@ const Login: React.FC = () => {
     }));
   };
 
-  const sendLoginRequest = async () => {
-    if (formState.isEmailValid && formState.isPasswordValid) {
-      try {
-        const response = await UserService.authenticateUser(
-          formState.email,
-          formState.password
-        );
-        saveToStorage('authToken', response.result.token);
-        const user = jwtDecode(response.result.token) as User;
-        saveToStorage('username', user.username);
-        router.push('/dashboard');
-      } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        alert('Erro ao autenticar. Verifique suas credenciais.');
-      }
-    }
+  const sendLoginRequest = () => {
+    login(formState.email, formState.password);
   };
 
   const goToRegister = () => {

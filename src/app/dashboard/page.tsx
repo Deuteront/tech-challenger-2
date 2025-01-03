@@ -1,21 +1,25 @@
 'use client';
 
 import React from 'react';
-import { Header } from '@/components/organisms/landing-page/header/header';
 import { Body } from '@/components/organisms/home/body/body';
 import { TransactionProvider } from '@/components/organisms/providers/transaction-context';
-import { useAuth } from '@/hooks/use-auth';
+import { Header } from '@/components/organisms/home/header/header';
+import { useAuth } from '@/app/auth-context';
+import { useRouter } from 'next/navigation';
 
 const Dashboard: React.FC = () => {
-  const { isAuth } = useAuth();
+  const { isAuth, loginOut } = useAuth();
+  const router = useRouter();
 
-  if (!isAuth) {
-    return null;
-  }
+  React.useEffect(() => {
+    if (!isAuth) {
+      router.push('/login');
+    }
+  }, [isAuth]);
 
   return (
     <>
-      <Header />
+      <Header isAuth={isAuth} loginOut={loginOut} />
       <TransactionProvider>
         <Body />
       </TransactionProvider>

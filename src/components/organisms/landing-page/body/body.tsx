@@ -4,10 +4,15 @@ import { Button } from '@/components/atoms/button/button';
 import Image from 'next/image';
 import { AdvantageList } from '@/components/molecules/advantage/advantage-list';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/app/auth-context';
 
 export function Body() {
   const router = useRouter();
-  const handleDashboard = () => router.push('/dashboard');
+  const { isAuth } = useAuth();
+
+  const handleDashboard = () =>
+    isAuth ? router.push('/dashboard') : router.push('/login');
   const advantages = [
     {
       text: 'Relatórios e análises em tempo real',
@@ -54,9 +59,9 @@ export function Body() {
           </div>
           <div className="wave-login">
             <span className="has-login">Vamos Começar?</span>
-            <a href="/dashboard" className="login">
+            <Link href="/dashboard" className="login">
               Iniciar
-            </a>
+            </Link>
           </div>
         </div>
       </div>

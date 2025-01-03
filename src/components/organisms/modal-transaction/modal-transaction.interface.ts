@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Props } from '@/components/organisms/dashboard/body/transitions/transactions-list.interface';
+import { Props } from '@/components/organisms/transitions/transactions-list.interface';
 
 export interface Transaction {
   id?: number;

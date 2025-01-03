@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './global.scss';
+import { AuthProvider } from '@/app/auth-context';
 
 export const metadata = {
   title: 'Meow Cash',
@@ -14,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

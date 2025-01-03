@@ -1,16 +1,22 @@
 import React from 'react';
 import './style.scss';
 import { Logo } from '@/components/organisms/logo/logo';
-import { useAuth } from '@/hooks/use-auth';
+import Link from 'next/link';
 
-export function Header() {
-  const { isAuth, loginOut } = useAuth();
+interface Props {
+  loginOut?: () => void;
+  isAuth?: boolean;
+}
+
+export function Header({ isAuth, loginOut }: Props) {
   return (
     <div className="header">
       <div className="container">
         <div className="row w-100">
           <div className="col-12 container-header">
-            <Logo />
+            <Link href="/">
+              <Logo />
+            </Link>
             {isAuth && (
               <span onClick={loginOut} className="logout">
                 Sair

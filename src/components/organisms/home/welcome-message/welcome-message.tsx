@@ -9,9 +9,10 @@ dayjs.extend(localizedFormat);
 dayjs.locale('pt-br');
 
 export function WelcomeMessage() {
+  // const username = getFromStorage('username') as string;
   return (
     <div className="welcome">
-      <span className="title">Olá, {getFromStorage('username')}</span>
+      <span className="title">Olá, a</span>
       <div className="date">{dayjs().format('dddd, DD/MM/YYYY')}</div>
     </div>
   );
