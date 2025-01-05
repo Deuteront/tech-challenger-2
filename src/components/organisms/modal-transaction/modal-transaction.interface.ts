@@ -1,15 +1,5 @@
-import { Dayjs } from 'dayjs';
 import { Props } from '@/components/organisms/transitions/transactions-list.interface';
-
-export interface Transaction {
-  id?: number;
-  value: number;
-  movement: string;
-  paymentMethod: string;
-  establishmentType: string;
-  desc: string;
-  transactionDate: Dayjs | null;
-}
+import { Transaction } from '@/service/interfaces';
 
 export interface TransactionModal extends Omit<Props, 'transactionsList'> {
   transaction: Transaction;
@@ -17,9 +7,6 @@ export interface TransactionModal extends Omit<Props, 'transactionsList'> {
 
 export interface Errors {
   value?: string;
-  movement?: string;
-  paymentMethod?: string;
-  establishmentType?: string;
-  desc?: string;
-  transactionDate?: string;
+  accountId?: string;
+  type?: string;
 }

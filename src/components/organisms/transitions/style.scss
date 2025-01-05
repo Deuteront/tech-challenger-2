@@ -57,11 +57,11 @@
   letter-spacing: var(--Title-Medium-Tracking, 0.15px);
   text-align: end;
 
-  &.outgoing {
+  &.Debit {
     color: #B3261E;
   }
 
-  &.incoming {
+  &.Credit {
     color: #3E6642;
   }
 }

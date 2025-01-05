@@ -19,19 +19,20 @@ interface AuthResponse {
 
 interface Account {
   id: string;
-  interface: string;
+  type: string;
   userId: string;
 }
 
 interface Transaction {
-  id: string;
+  id?: string;
   accountId: string;
-  type: string;
+  type: 'Credit' | 'Debit';
   value: number;
   date: string;
   from?: string;
   to?: string;
   anexo?: string;
+  account?: Account;
 }
 
 interface TransactionSend {
@@ -58,11 +59,13 @@ interface Card {
 
 interface AccountResponse {
   message: string;
-  result: {
-    account: Account[];
-    transactions: Transaction[];
-    cards: Card[];
-  };
+  result: UserBalance;
+}
+
+interface UserBalance {
+  account: Account[];
+  transactions: Transaction[];
+  cards: Card[];
 }
 
 export type {
@@ -74,4 +77,5 @@ export type {
   TransactionSend,
   Card,
   AccountResponse,
+  UserBalance,
 };

@@ -1,52 +1,46 @@
-import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
-import { getFromStorage, saveToStorage } from '@/utils/storage';
-import dayjs from 'dayjs';
+import {} from '@/components/organisms/modal-transaction/modal-transaction.interface';
+import React from 'react';
+import { Transaction } from '@/service/interfaces';
 
 export const initialTransactionData: Transaction = {
-  value: 0.0,
-  movement: '',
-  paymentMethod: '',
-  establishmentType: '',
-  transactionDate: dayjs(),
-  desc: '',
+  accountId: '',
+  type: 'Debit',
+  value: 0,
+  date: '',
 };
 
-export const handleNext = (
+export const handleNext = async (
   step: number,
-  setStep: (step: number) => void,
+  setStep: React.Dispatch<React.SetStateAction<number>>,
   transactionData: Transaction,
-  closeModal: (transaction: Transaction) => void
-) => {
+  closeModal: (transaction: Transaction) => Promise<void>
+): Promise<void> => {
   if (step < 2) {
     setStep(step + 1);
   } else {
-    const newTransaction = {
-      ...transactionData,
-      id: generateTransactionId(),
-    };
-    closeModal(newTransaction);
+    await closeModal(transactionData);
   }
 };
 
-export const handlePrev = (step: number, setStep: (step: number) => void) => {
+export const handlePrev = (
+  step: number,
+  setStep: React.Dispatch<React.SetStateAction<number>>
+): void => {
   if (step > 0) {
     setStep(step - 1);
   }
 };
 
-export const generateTransactionId = (): number => {
-  const currentId = (getFromStorage('transactionIdCounter') as number) || 0;
-  const newId = currentId + 1;
-  saveToStorage('transactionIdCounter', newId);
-  return newId;
+export const MOVEMENT_TYPE = {
+  credit: 'Credit',
+  debit: 'Debit',
 };
 
-export const transactionsName = 'transactions';
-
 export const MOVEMENT_OPTIONS = [
-  { value: 'incoming', text: 'Entrada', arithmeticOperator: '+' },
-  { value: 'outgoing', text: 'Saída', arithmeticOperator: '-' },
+  { value: MOVEMENT_TYPE.credit, text: 'Entrada', arithmeticOperator: '+' },
+  { value: MOVEMENT_TYPE.debit, text: 'Saída', arithmeticOperator: '-' },
 ];
+
 const arithmeticOperatorMap = new Map(
   MOVEMENT_OPTIONS.map(({ value, arithmeticOperator }) => [
     value,
@@ -54,33 +48,6 @@ const arithmeticOperatorMap = new Map(
   ])
 );
 
-export const getArithmeticOperator = (value: string) =>
-  arithmeticOperatorMap.get(value) || 'Operador desconhecido';
-
-export const PAYMENT_METHOD_OPTIONS = [
-  { value: 'dinheiro', text: 'Dinheiro' },
-  { value: 'cartão', text: 'Cartão' },
-  { value: 'pix', text: 'Pix' },
-];
-
-const paymentMethodMap = new Map(
-  PAYMENT_METHOD_OPTIONS.map(({ value, text }) => [value, text])
-);
-
-export const getPaymentMethodText = (value: string) =>
-  paymentMethodMap.get(value) || 'Método de pagamento desconhecido';
-
-export const ESTABLISHMENT_TYPE_SAVE = 'guardar';
-
-export const ESTABLISHMENT_TYPE_OPTIONS = [
-  { value: 'conta', text: 'Conta', icon: 'grey-boleto' },
-  { value: 'alimentação', text: 'Alimentação', icon: 'grey-fork' },
-  { value: ESTABLISHMENT_TYPE_SAVE, text: 'Guardar', icon: 'grey-pig' },
-];
-
-const iconMap = new Map(
-  ESTABLISHMENT_TYPE_OPTIONS.map(({ value, icon }) => [value, icon])
-);
-
-export const getIconEstablishment = (iconTransaction: string) =>
-  iconMap.get(iconTransaction) || 'grey-boleto';
+export const getArithmeticOperator = (value: string): string => {
+  return arithmeticOperatorMap.get(value) || 'Operador desconhecido';
+};

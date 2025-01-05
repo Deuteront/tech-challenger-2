@@ -35,6 +35,14 @@ class ApiFacade {
   post<T, B>(url: string, body: B, token?: string): Promise<T> {
     return this.request<T, B>(BASE_URL + url, 'POST', token, body);
   }
+
+  put<T, B>(url: string, body: B, token?: string): Promise<T> {
+    return this.request<T, B>(BASE_URL + url, 'PUT', token, body);
+  }
+
+  delete<T>(url: string, token?: string): Promise<T> {
+    return this.request<T, undefined>(BASE_URL + url, 'DELETE', token);
+  }
 }
 
 export const service = new ApiFacade();

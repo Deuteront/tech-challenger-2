@@ -6,8 +6,8 @@ import { Button } from '@/components/atoms/button/button';
 import ModalWrapper from '@/components/atoms/modal-wrapper/modal-wrapper';
 import ModalTransaction from '@/components/organisms/modal-transaction/modal-transaction';
 import { TransactionsDetailsList } from './transactions-list';
-import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
+import { Transaction } from '@/service/interfaces';
 
 export function Transitions() {
   const { transactions, removeTransaction } = useTransactionContext();

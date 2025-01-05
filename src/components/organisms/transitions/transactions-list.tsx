@@ -1,6 +1,6 @@
 import React from 'react';
 import { Props } from './transactions-list.interface';
-import { TransactionsDetails } from './transactions';
+import { TransactionsDetails } from './transactions-details';
 
 export function TransactionsDetailsList({
   transactionsList,

@@ -1,4 +1,4 @@
-import { Transaction } from '@/components/organisms/modal-transaction/modal-transaction.interface';
+import { Transaction } from '@/service/interfaces';
 
 export interface Props {
   transactionsList: Transaction[];

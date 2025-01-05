@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
@@ -9,10 +9,14 @@ dayjs.extend(localizedFormat);
 dayjs.locale('pt-br');
 
 export function WelcomeMessage() {
-  // const username = getFromStorage('username') as string;
+  const [username, setUsername] = useState<string>();
+
+  useEffect(() => {
+    setUsername(getFromStorage('username') as string);
+  }, []);
   return (
     <div className="welcome">
-      <span className="title">Olá, a</span>
+      <span className="title">Olá, {username}</span>
       <div className="date">{dayjs().format('dddd, DD/MM/YYYY')}</div>
     </div>
   );

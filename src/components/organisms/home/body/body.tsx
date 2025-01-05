@@ -7,6 +7,7 @@ import { FinancialDashboardList } from '@/components/molecules/financial-dashboa
 import { CardBalanceActual } from '@/components/molecules/card-balance-actual/card-balance-actual';
 import { Transitions } from '@/components/organisms/transitions/transitions';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
+import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
 
 export function Body() {
   const { transactions } = useTransactionContext();
@@ -15,9 +16,9 @@ export function Body() {
 
   const { totalIncoming, totalOutgoing } = transactions?.reduce(
     (acc, transaction) => {
-      if (transaction.movement === 'incoming') {
+      if (transaction.type === MOVEMENT_TYPE.credit) {
         acc.totalIncoming += transaction.value;
-      } else if (transaction.movement === 'outgoing') {
+      } else if (transaction.type === MOVEMENT_TYPE.debit) {
         acc.totalOutgoing += transaction.value;
       }
       return acc;
@@ -41,7 +42,7 @@ export function Body() {
   ];
 
   const totalValue =
-    'R$ ' + ((totalIncoming || 0) - (totalOutgoing || 0)).toFixed(2);
+    'R$ ' + ((totalIncoming || 0) + (totalOutgoing || 0)).toFixed(2);
 
   const addClassInvisible = () => {
     setVisibleValues(!visibleValues);
