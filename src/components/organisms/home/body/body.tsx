@@ -5,11 +5,10 @@ import './style.scss';
 import { WelcomeMessage } from '@/components/organisms/home/welcome-message/welcome-message';
 import { FinancialDashboardList } from '@/components/molecules/financial-dashboard/financial-deshboard-list';
 import { CardBalanceActual } from '@/components/molecules/card-balance-actual/card-balance-actual';
-import { Transitions } from '@/components/organisms/transitions/transitions';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
 
-export function Body() {
+export function Body({ children }: { children: React.ReactNode }) {
   const { transactions } = useTransactionContext();
   const financialHistoryLastMouth = 'Relação desde o inicio';
   const [visibleValues, setVisibleValues] = useState<boolean>(true);
@@ -66,7 +65,7 @@ export function Body() {
                 />
               </div>
               <div className="separation"></div>
-              <Transitions />
+              {children}
             </div>
           </div>
         </div>

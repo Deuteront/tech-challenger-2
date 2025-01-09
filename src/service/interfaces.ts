@@ -31,7 +31,7 @@ interface Transaction {
   date: string;
   from?: string;
   to?: string;
-  anexo?: string;
+  anexo?: File;
   account?: Account;
 }
 

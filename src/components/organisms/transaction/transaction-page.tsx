@@ -9,7 +9,7 @@ import { TransactionsDetailsList } from './transactions-list';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { Transaction } from '@/service/interfaces';
 
-export function Transitions() {
+export function TransactionPage() {
   const { transactions, removeTransaction } = useTransactionContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionId, setTransactionId] =

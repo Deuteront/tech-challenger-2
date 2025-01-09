@@ -3,8 +3,8 @@
 import React from 'react';
 import { TransactionPage } from '@/components/organisms/transaction/transaction-page';
 
-const DashboardPage: React.FC = () => {
-  return <TransactionPage />;
+const Transaction: React.FC = () => {
+  return <>paulo</>;
 };
 
-export default DashboardPage;
+export default Transaction;

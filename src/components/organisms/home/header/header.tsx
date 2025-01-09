@@ -18,6 +18,19 @@ export function Header({ isAuth, loginOut }: Props) {
               <Logo />
             </Link>
             {isAuth && (
+              <div className={'menu-container'}>
+                <Link href="/dashboard" className={'menu-item'}>
+                  Transferências
+                </Link>
+                <Link href="/dashboard/investments" className={'menu-item'}>
+                  Investimentos
+                </Link>
+                <Link href="/dashboard/other-services" className={'menu-item'}>
+                  Outros serviços
+                </Link>
+              </div>
+            )}
+            {isAuth && (
               <span onClick={loginOut} className="logout">
                 Sair
               </span>

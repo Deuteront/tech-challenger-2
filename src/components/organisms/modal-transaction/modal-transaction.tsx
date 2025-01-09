@@ -5,9 +5,10 @@ import { InputCurrency } from '@/components/molecules/input-currency/input-curre
 import { initialTransactionData, MOVEMENT_OPTIONS } from './constants';
 import { Errors } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
-import { Button } from '@/components/atoms/button/button';
 import { Input } from '@/components/atoms/input/input';
 import { Transaction } from '@/service/interfaces';
+import { Button } from '@/components/atoms/button/button';
+import { UploadFile } from '@/components/atoms/upload-file/upload-file';
 
 interface ModalContentProps {
   closeModal: () => void;
@@ -46,6 +47,15 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+    const uploadedFile = e.target.files?.[0] || null;
+    setTransactionData((prev) => ({
+      ...prev,
+      anexo: uploadedFile as File,
+    }));
   };
 
   const handleSaveTransaction = async () => {
@@ -125,17 +135,9 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
           }
           value={transactionData.to || ''}
         />
-        <Input
-          type="text"
-          label="Anexo"
-          onChange={(e) =>
-            setTransactionData((prev) => ({
-              ...prev,
-              anexo: e.target.value,
-            }))
-          }
-          value={transactionData.anexo || ''}
-        />
+        <>
+          <UploadFile onChange={handleFileChange}></UploadFile>
+        </>
       </div>
       <div className="navigation-buttons">
         <Button

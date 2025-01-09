@@ -32,7 +32,27 @@
   font-weight: 500;
 }
 
+.menu-item {
+  color: #AB5373;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+}
+
+.menu-container {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  flex-grow: 1;
+  align-items: center;
+  padding: 0 46px;
+
+}
+
 .container-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
