@@ -2,7 +2,12 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getFromStorage } from '@/utils/storage';
 import { TransactionService } from '@/service/transaction';
 import { UserService } from '@/service/user';
-import { Account, Transaction, UserBalance } from '@/service/interfaces';
+import {
+  Account,
+  Filter,
+  Transaction,
+  UserBalance,
+} from '@/service/interfaces';
 
 export interface TransactionContextType {
   transactions: UserBalance['transactions'];
@@ -11,6 +16,7 @@ export interface TransactionContextType {
   editTransaction: (updatedTransaction: Transaction) => Promise<boolean>;
   cards: UserBalance['cards'];
   accounts: UserBalance['account'];
+  updateAccountBalance: (filter?: Filter) => Promise<void>;
 }
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -23,9 +29,12 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   const [userBalance, setUserBalance] = useState<UserBalance>();
   const token = getFromStorage('authToken') as string;
 
-  const updateAccountBalance = async () => {
+  const updateAccountBalance = async (filter?: Filter) => {
     try {
-      const { result: userBalance } = await UserService.getAccount(token);
+      const { result: userBalance } = await UserService.getAccount(
+        token,
+        filter
+      );
 
       if (!userBalance || !userBalance.account || !userBalance.transactions) {
         console.error('Dados de conta ou transações ausentes');
@@ -89,6 +98,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
         addTransaction,
         removeTransaction,
         editTransaction,
+        updateAccountBalance,
       }}
     >
       {children}

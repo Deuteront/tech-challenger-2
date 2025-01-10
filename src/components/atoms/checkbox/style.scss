@@ -1,0 +1,13 @@
+@import '../../../app/variables';
+
+.custom-checkbox-container {
+  display: flex;
+  flex-direction: column;
+
+  .custom-checkbox {
+    &.Mui-checked {
+      color: $primary-color;
+    }
+  }
+
+}

@@ -5,6 +5,7 @@ import { Button } from '@/components/atoms/button/button';
 import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
 import { TransactionModal } from '@/components/organisms/modal-transaction/modal-transaction.interface';
+import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
 
 export function TransactionsDetails({
   transaction,
@@ -18,7 +19,7 @@ export function TransactionsDetails({
       <div className="transaction-title">
         <Image
           src={`/svgs/${type === 'Credit' ? 'indicador_card_Icon_up' : 'indicador_card_Icon_low'}.svg`}
-          alt={type === 'Credit' ? 'Entrada' : 'Saida'}
+          alt={type === MOVEMENT_TYPE.credit ? 'Entrada' : 'Saida'}
           width={40}
           height={40}
         />
@@ -26,7 +27,7 @@ export function TransactionsDetails({
           {account && (
             <div className="transactions-list-title">Conta: {account.type}</div>
           )}
-          {anexo && <div className="transactions-type">Anexo: {anexo}</div>}
+          {/*{anexo && <div className="transactions-type">Anexo: {anexo}</div>}*/}
         </div>
 
         {to && <div className="transactions-type">Entrada: {to}</div>}

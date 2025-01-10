@@ -50,3 +50,30 @@
 
   }
 }
+
+.custom-select-container {
+  position: relative;
+
+  .select-wrapper {
+    position: relative;
+
+    .custom-select {
+      width: 100%;
+    }
+
+    .clear-button {
+      position: absolute;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      z-index: 1;
+      padding: 4px;
+      background: transparent;
+      color: $primary-color !important;
+
+      &:hover {
+        color: $secondary-color !important;
+      }
+    }
+  }
+}

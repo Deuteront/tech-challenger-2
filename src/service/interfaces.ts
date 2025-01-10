@@ -1,8 +1,20 @@
+import dayjs from 'dayjs';
+
 interface User {
   id?: string;
   username: string;
   email: string;
   password?: string;
+}
+
+interface Filter {
+  type: Transaction['type'] | '';
+  accountId: string;
+  value: number;
+  date: [dayjs.Dayjs | null, dayjs.Dayjs | null];
+  from: string;
+  to: string;
+  anexo: boolean | undefined;
 }
 
 interface authUser {
@@ -78,4 +90,5 @@ export type {
   Card,
   AccountResponse,
   UserBalance,
+  Filter,
 };

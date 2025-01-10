@@ -135,9 +135,7 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
           }
           value={transactionData.to || ''}
         />
-        <>
-          <UploadFile onChange={handleFileChange}></UploadFile>
-        </>
+        <UploadFile onChange={handleFileChange}></UploadFile>
       </div>
       <div className="navigation-buttons">
         <Button

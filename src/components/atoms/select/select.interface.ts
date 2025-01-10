@@ -1,5 +1,4 @@
 import { SelectChangeEvent } from '@mui/material';
-import { ReactNode } from 'react';
 
 export interface Option {
   value: string;
@@ -8,7 +7,7 @@ export interface Option {
 
 export interface Props {
   value: string;
-  onChange: (event: SelectChangeEvent, child: ReactNode) => void;
+  onChange: (event: SelectChangeEvent) => void;
   options: Option[];
   label: string;
   error?: boolean;

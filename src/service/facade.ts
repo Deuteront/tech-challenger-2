@@ -28,8 +28,8 @@ class ApiFacade {
     return response.json();
   }
 
-  get<T>(url: string, token?: string): Promise<T> {
-    return this.request<T, undefined>(BASE_URL + url, 'GET', token);
+  get<T, B>(url: string, token?: string, body?: B): Promise<T> {
+    return this.request<T, B>(BASE_URL + url, 'GET', token, body);
   }
 
   post<T, B>(url: string, body: B, token?: string): Promise<T> {

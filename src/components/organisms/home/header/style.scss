@@ -39,6 +39,10 @@
   font-weight: 400;
   line-height: normal;
   text-decoration: none;
+  cursor: pointer;
+  &.activate {
+    font-weight: 700;
+  }
 }
 
 .menu-container {

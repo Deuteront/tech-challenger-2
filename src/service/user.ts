@@ -2,6 +2,7 @@ import {
   AccountResponse,
   AuthResponse,
   authUser,
+  Filter,
   User,
 } from '@/service/interfaces';
 import { service } from '@/service/facade';
@@ -31,8 +32,11 @@ const authenticateUser = async (
   });
 };
 
-const getAccount = async (token: string): Promise<AccountResponse> => {
-  return service.get<AccountResponse>('/account', token);
+const getAccount = async (
+  token: string,
+  filter?: Filter
+): Promise<AccountResponse> => {
+  return service.get<AccountResponse, Filter>('/account', token, filter);
 };
 
 export const UserService = {

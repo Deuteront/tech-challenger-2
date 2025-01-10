@@ -8,6 +8,7 @@ import ModalTransaction from '@/components/organisms/modal-transaction/modal-tra
 import { TransactionsDetailsList } from './transactions-list';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { Transaction } from '@/service/interfaces';
+import { TransactionFilter } from '@/components/organisms/transaction/transaction-filter';
 
 export function TransactionPage() {
   const { transactions, removeTransaction } = useTransactionContext();
@@ -32,6 +33,7 @@ export function TransactionPage() {
     <>
       <div className="transactions">
         <div className="row">
+          <TransactionFilter />
           <div className="d-flex flex-row justify-content-between">
             <span className="transactions-title">Transações recentes</span>
             <Button
