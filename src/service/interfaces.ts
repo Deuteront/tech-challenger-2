@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 interface User {
   id?: string;
   username: string;
@@ -9,9 +7,9 @@ interface User {
 
 interface Filter {
   type: Transaction['type'] | '';
-  accountId: string;
   value: number;
-  date: [dayjs.Dayjs | null, dayjs.Dayjs | null];
+  dateInitial: string;
+  dateFinal: string;
   from: string;
   to: string;
   anexo: boolean | undefined;
@@ -43,17 +41,8 @@ interface Transaction {
   date: string;
   from?: string;
   to?: string;
-  anexo?: File;
+  anexo?: string | File;
   account?: Account;
-}
-
-interface TransactionSend {
-  accountId: string;
-  type: string;
-  value: number;
-  from?: string;
-  to?: string;
-  anexo?: string;
 }
 
 interface Card {
@@ -86,7 +75,6 @@ export type {
   AuthResponse,
   Account,
   Transaction,
-  TransactionSend,
   Card,
   AccountResponse,
   UserBalance,

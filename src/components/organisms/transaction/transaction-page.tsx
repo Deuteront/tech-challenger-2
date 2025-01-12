@@ -7,14 +7,29 @@ import ModalWrapper from '@/components/atoms/modal-wrapper/modal-wrapper';
 import ModalTransaction from '@/components/organisms/modal-transaction/modal-transaction';
 import { TransactionsDetailsList } from './transactions-list';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
-import { Transaction } from '@/service/interfaces';
+import { Filter, Transaction } from '@/service/interfaces';
 import { TransactionFilter } from '@/components/organisms/transaction/transaction-filter';
+import { TransactionService } from '@/service/transaction';
 
 export function TransactionPage() {
-  const { transactions, removeTransaction } = useTransactionContext();
+  const { transactions, removeTransaction, accounts } = useTransactionContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filteredTransactions, setFilteredTransactions] =
+    useState<Transaction[]>();
   const [transactionId, setTransactionId] =
     useState<Transaction['id']>(undefined);
+
+  const filterTransactions = async (filter: Filter) => {
+    try {
+      const response = await TransactionService.getStatement(
+        accounts[0].id,
+        filter
+      );
+      setFilteredTransactions(response.result.transactions);
+    } catch (error) {
+      console.log('Erro ao filtrar transações:', error);
+    }
+  };
 
   const openModal = (id?: Transaction['id']) => {
     setTransactionId(id);
@@ -29,11 +44,15 @@ export function TransactionPage() {
     removeTransaction(id);
   };
 
+  const getTransaction = () => {
+    return filteredTransactions || transactions || [];
+  };
+
   return (
     <>
       <div className="transactions">
         <div className="row">
-          <TransactionFilter />
+          <TransactionFilter filterTransactions={filterTransactions} />
           <div className="d-flex flex-row justify-content-between">
             <span className="transactions-title">Transações recentes</span>
             <Button
@@ -43,9 +62,9 @@ export function TransactionPage() {
             ></Button>
           </div>
         </div>
-        {transactions && transactions.length > 0 ? (
+        {getTransaction().length > 0 ? (
           <TransactionsDetailsList
-            transactionsList={transactions}
+            transactionsList={getTransaction()}
             edit={openModal}
             exclude={exclude}
           />

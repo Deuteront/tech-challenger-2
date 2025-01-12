@@ -6,21 +6,25 @@ import { InputCurrency } from '@/components/molecules/input-currency/input-curre
 import { CustomSelect } from '@/components/atoms/select/select';
 import { MOVEMENT_OPTIONS_FILTER } from '@/components/organisms/modal-transaction/constants';
 import { Input } from '@/components/atoms/input/input';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { DialogTitle } from '@mui/material';
+import { Button } from '@/components/atoms/button/button';
 
 const initialFilter: Filter = {
-  date: [null, null],
+  dateInitial: '',
+  dateFinal: '',
   value: 0,
   type: '',
-  accountId: '',
   from: '',
   to: '',
   anexo: undefined,
 };
 
-export function TransactionFilter() {
-  const { accounts } = useTransactionContext();
+interface Props {
+  filterTransactions: (filter: Filter) => void;
+}
+
+export function TransactionFilter({ filterTransactions }: Props) {
   const [filter, setFilter] = useState<Filter>(initialFilter);
 
   const handleDateChange = ({
@@ -32,7 +36,8 @@ export function TransactionFilter() {
   }) => {
     setFilter((prev) => ({
       ...prev,
-      date: [start, end],
+      dateInitial: start ? start.format('YYYY-MM-DD') : '',
+      dateFinal: end ? end.format('YYYY-MM-DD') : '',
     }));
   };
 
@@ -47,13 +52,6 @@ export function TransactionFilter() {
     setFilter((prev) => ({
       ...prev,
       type: newType as Transaction['type'],
-    }));
-  };
-
-  const handleAccountChange = (newAccountId: string) => {
-    setFilter((prev) => ({
-      ...prev,
-      accountId: newAccountId,
     }));
   };
 
@@ -82,7 +80,10 @@ export function TransactionFilter() {
         <CustomDateRangePicker
           labelStart="Data Inicial"
           labelEnd="Data Final"
-          value={{ start: filter.date[0], end: filter.date[1] }}
+          value={{
+            start: dayjs(filter.dateInitial),
+            end: dayjs(filter.dateFinal),
+          }}
           onChange={handleDateChange}
         />
         <InputCurrency
@@ -95,15 +96,6 @@ export function TransactionFilter() {
           label="Movimentação"
           onChange={(e) => handleTypeChange(e.target.value)}
           options={MOVEMENT_OPTIONS_FILTER}
-        />
-        <CustomSelect
-          value={filter.accountId}
-          label="Conta"
-          onChange={(e) => handleAccountChange(e.target.value)}
-          options={accounts.map((account) => ({
-            value: account.id,
-            text: account.type,
-          }))}
         />
         <Input
           type="text"
@@ -132,6 +124,13 @@ export function TransactionFilter() {
             },
           ]}
         />
+
+        <Button
+          className={['button']}
+          onClick={() => filterTransactions(filter)}
+        >
+          Filtrar
+        </Button>
       </div>
     </>
   );

@@ -23,7 +23,7 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
   const [transactionData, setTransactionData] = useState<Transaction>(
     initialTransactionData
   );
-  const { transactions, editTransaction, addTransaction, accounts } =
+  const { transactions, editTransaction, addTransaction } =
     useTransactionContext();
 
   useEffect(() => {
@@ -41,20 +41,20 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
     if (!transactionData.type) {
       newErrors.type = 'Movimentação é obrigatória.';
     }
-    if (!transactionData.accountId) {
-      newErrors.accountId = 'A Conta é obrigatória.';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
-    const uploadedFile = e.target.files?.[0] || null;
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
     setTransactionData((prev) => ({
       ...prev,
-      anexo: uploadedFile as File,
+      anexo: file,
     }));
   };
 
@@ -96,22 +96,6 @@ const ModalTransaction: React.FC<ModalContentProps> = ({
           options={MOVEMENT_OPTIONS}
           error={!!errors.type}
           helperText={errors.type}
-        />
-        <CustomSelect
-          value={transactionData.accountId.toString()}
-          label="Conta *"
-          onChange={(e) =>
-            setTransactionData((prev) => ({
-              ...prev,
-              accountId: e.target.value,
-            }))
-          }
-          options={accounts.map((account) => ({
-            value: account.id,
-            text: account.type,
-          }))}
-          error={!!errors.accountId}
-          helperText={errors.accountId}
         />
         <Input
           type="text"

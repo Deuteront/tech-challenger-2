@@ -2,10 +2,12 @@ import {
   AccountResponse,
   AuthResponse,
   authUser,
-  Filter,
   User,
 } from '@/service/interfaces';
 import { service } from '@/service/facade';
+import { getFromStorage } from '@/utils/storage';
+
+const token = getFromStorage('authToken') as string;
 
 const createUser = async (
   username: string,
@@ -32,11 +34,8 @@ const authenticateUser = async (
   });
 };
 
-const getAccount = async (
-  token: string,
-  filter?: Filter
-): Promise<AccountResponse> => {
-  return service.get<AccountResponse, Filter>('/account', token, filter);
+const getAccount = async (): Promise<AccountResponse> => {
+  return service.get<AccountResponse, null>('/account', token);
 };
 
 export const UserService = {

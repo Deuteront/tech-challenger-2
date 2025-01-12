@@ -2,12 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getFromStorage } from '@/utils/storage';
 import { TransactionService } from '@/service/transaction';
 import { UserService } from '@/service/user';
-import {
-  Account,
-  Filter,
-  Transaction,
-  UserBalance,
-} from '@/service/interfaces';
+import { Account, Transaction, UserBalance } from '@/service/interfaces';
 
 export interface TransactionContextType {
   transactions: UserBalance['transactions'];
@@ -16,7 +11,7 @@ export interface TransactionContextType {
   editTransaction: (updatedTransaction: Transaction) => Promise<boolean>;
   cards: UserBalance['cards'];
   accounts: UserBalance['account'];
-  updateAccountBalance: (filter?: Filter) => Promise<void>;
+  updateAccountBalance: () => Promise<void>;
 }
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -27,14 +22,10 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [userBalance, setUserBalance] = useState<UserBalance>();
-  const token = getFromStorage('authToken') as string;
 
-  const updateAccountBalance = async (filter?: Filter) => {
+  const updateAccountBalance = async () => {
     try {
-      const { result: userBalance } = await UserService.getAccount(
-        token,
-        filter
-      );
+      const { result: userBalance } = await UserService.getAccount();
 
       if (!userBalance || !userBalance.account || !userBalance.transactions) {
         console.error('Dados de conta ou transações ausentes');
@@ -68,22 +59,34 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const addTransaction = async (newTransaction: Transaction) => {
-    debugger;
-    await TransactionService.createTransaction(token, newTransaction);
+    const formData = new FormData();
+    newTransaction.accountId = userBalance?.account[0].id as string;
+    Object.entries(newTransaction).forEach(([key, value]) => {
+      if (value !== undefined) {
+        formData.append(key, value instanceof File ? value : String(value));
+      }
+    });
+    await TransactionService.createTransaction(formData);
     await updateAccountBalance();
     return true;
   };
 
   const removeTransaction = async (id: Transaction['id']) => {
-    await TransactionService.deleteTransaction(token, id as string);
+    await TransactionService.deleteTransaction(id as string);
     await updateAccountBalance();
   };
 
   const editTransaction = async (updatedTransaction: Transaction) => {
+    const formData = new FormData();
+    Object.entries(updatedTransaction).forEach(([key, value]) => {
+      if (value !== undefined) {
+        formData.append(key, value instanceof File ? value : String(value));
+      }
+    });
+
     await TransactionService.editTransaction(
-      token,
-      updatedTransaction.id as string,
-      updatedTransaction
+      userBalance?.account[0].userId as string,
+      formData
     );
     await updateAccountBalance();
     return true;

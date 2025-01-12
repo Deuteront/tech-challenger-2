@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
 import { TransactionModal } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
+import { TransactionService } from '@/service/transaction';
 
 export function TransactionsDetails({
   transaction,
@@ -13,6 +14,10 @@ export function TransactionsDetails({
   exclude,
 }: TransactionModal) {
   const { date, id, value, type, to, from, anexo, account } = transaction;
+
+  const downloadAnexo = async () => {
+    await TransactionService.downloadAnexo(anexo as string);
+  };
 
   return (
     <div className="transaction">
@@ -23,11 +28,16 @@ export function TransactionsDetails({
           width={40}
           height={40}
         />
+
         <div className="flex-column">
           {account && (
             <div className="transactions-list-title">Conta: {account.type}</div>
           )}
-          {/*{anexo && <div className="transactions-type">Anexo: {anexo}</div>}*/}
+          {anexo && (
+            <button onClick={downloadAnexo} className="transactions-type">
+              Anexo: {anexo as string}
+            </button>
+          )}
         </div>
 
         {to && <div className="transactions-type">Entrada: {to}</div>}
