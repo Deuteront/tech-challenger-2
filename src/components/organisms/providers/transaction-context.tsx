@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getFromStorage } from '@/utils/storage';
 import { TransactionService } from '@/service/transaction';
 import { UserService } from '@/service/user';
 import { Account, Transaction, UserBalance } from '@/service/interfaces';
@@ -26,6 +25,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateAccountBalance = async () => {
     try {
       const { result: userBalance } = await UserService.getAccount();
+      console.log(userBalance);
 
       if (!userBalance || !userBalance.account || !userBalance.transactions) {
         console.error('Dados de conta ou transações ausentes');
@@ -85,7 +85,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     await TransactionService.editTransaction(
-      userBalance?.account[0].userId as string,
+      updatedTransaction.id as string,
       formData
     );
     await updateAccountBalance();

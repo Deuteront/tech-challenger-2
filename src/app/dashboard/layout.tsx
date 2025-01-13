@@ -6,7 +6,6 @@ import { Header } from '@/components/organisms/home/header/header';
 import { useAuth } from '@/app/auth-context';
 import { useRouter } from 'next/navigation';
 import { Body } from '@/components/organisms/home/body/body';
-import { ComponentChart } from '@/components/molecules/chart/chart';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;

@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
-import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
+import React from 'react';
 import { Filter, Transaction } from '@/service/interfaces';
 import { CustomDateRangePicker } from '@/components/atoms/date-range-picker/date-range-picker';
 import { InputCurrency } from '@/components/molecules/input-currency/input-currency';
 import { CustomSelect } from '@/components/atoms/select/select';
-import { MOVEMENT_OPTIONS_FILTER } from '@/components/organisms/modal-transaction/constants';
+import { MOVEMENT_OPTIONS } from '@/components/organisms/modal-transaction/constants';
 import { Input } from '@/components/atoms/input/input';
 import dayjs, { Dayjs } from 'dayjs';
 import { DialogTitle } from '@mui/material';
 import { Button } from '@/components/atoms/button/button';
 
-const initialFilter: Filter = {
-  dateInitial: '',
-  dateFinal: '',
-  value: 0,
-  type: '',
-  from: '',
-  to: '',
-  anexo: undefined,
-};
-
 interface Props {
-  filterTransactions: (filter: Filter) => void;
+  onChange: (filter: Filter) => void;
+  onClick: () => void;
+  filter: Filter;
 }
 
-export function TransactionFilter({ filterTransactions }: Props) {
-  const [filter, setFilter] = useState<Filter>(initialFilter);
-
+export function TransactionFilter({ onChange, filter, onClick }: Props) {
   const handleDateChange = ({
     start,
     end,
@@ -34,32 +23,32 @@ export function TransactionFilter({ filterTransactions }: Props) {
     start: Dayjs | null;
     end: Dayjs | null;
   }) => {
-    setFilter((prev) => ({
-      ...prev,
+    onChange({
+      ...filter,
       dateInitial: start ? start.format('YYYY-MM-DD') : '',
       dateFinal: end ? end.format('YYYY-MM-DD') : '',
-    }));
+    });
   };
 
   const handleValueChange = (newValue: number) => {
-    setFilter((prev) => ({
-      ...prev,
+    onChange({
+      ...filter,
       value: newValue,
-    }));
+    });
   };
 
   const handleTypeChange = (newType: string) => {
-    setFilter((prev) => ({
-      ...prev,
+    onChange({
+      ...filter,
       type: newType as Transaction['type'],
-    }));
+    });
   };
 
   const handleInputChange = (field: 'from' | 'to', value: string) => {
-    setFilter((prev) => ({
-      ...prev,
+    onChange({
+      ...filter,
       [field]: value,
-    }));
+    });
   };
 
   const handleAnexoChange = (anexo: string) => {
@@ -67,10 +56,10 @@ export function TransactionFilter({ filterTransactions }: Props) {
     if (anexo !== undefined) {
       isAnexo = anexo === 'true';
     }
-    setFilter((prev) => ({
-      ...prev,
+    onChange({
+      ...filter,
       anexo: isAnexo,
-    }));
+    });
   };
 
   return (
@@ -95,19 +84,7 @@ export function TransactionFilter({ filterTransactions }: Props) {
           value={filter.type}
           label="Movimentação"
           onChange={(e) => handleTypeChange(e.target.value)}
-          options={MOVEMENT_OPTIONS_FILTER}
-        />
-        <Input
-          type="text"
-          label="Origem"
-          value={filter.from || ''}
-          onChange={(e) => handleInputChange('from', e.target.value)}
-        />
-        <Input
-          type="text"
-          label="Destino"
-          value={filter.to || ''}
-          onChange={(e) => handleInputChange('to', e.target.value)}
+          options={MOVEMENT_OPTIONS}
         />
         <CustomSelect
           value={filter.anexo === undefined ? '' : filter.anexo.toString()}
@@ -124,13 +101,6 @@ export function TransactionFilter({ filterTransactions }: Props) {
             },
           ]}
         />
-
-        <Button
-          className={['button']}
-          onClick={() => filterTransactions(filter)}
-        >
-          Filtrar
-        </Button>
       </div>
     </>
   );

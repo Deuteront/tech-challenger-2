@@ -9,12 +9,10 @@ class ApiFacade {
   ): Promise<T> {
     const headers: Record<string, string> = {};
 
-    // Add Authorization header if token is provided
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    // Determine Content-Type dynamically
     const isFormData = body instanceof FormData;
     if (!isFormData) {
       headers['Content-Type'] = 'application/json';
@@ -31,7 +29,6 @@ class ApiFacade {
     });
 
     if (!response.ok) {
-      // Handle specific status codes if needed
       const errorDetails = await response.text();
       throw new Error(
         `Error: ${response.statusText}. Details: ${errorDetails}`

@@ -2,6 +2,7 @@ import React from 'react';
 
 import './global.scss';
 import { AuthProvider } from '@/app/auth-context';
+import { QueryProvider } from '@/components/organisms/providers/query-provider';
 
 export const metadata = {
   title: 'Meow Cash',
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <QueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

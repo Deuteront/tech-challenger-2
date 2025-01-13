@@ -17,10 +17,6 @@ export const MOVEMENT_OPTIONS = [
   { value: MOVEMENT_TYPE.credit, text: 'Entrada', arithmeticOperator: '+' },
   { value: MOVEMENT_TYPE.debit, text: 'Saída', arithmeticOperator: '-' },
 ];
-export const MOVEMENT_OPTIONS_FILTER = [
-  ...MOVEMENT_OPTIONS,
-  { value: '', text: '', arithmeticOperator: '' },
-];
 
 const arithmeticOperatorMap = new Map(
   MOVEMENT_OPTIONS.map(({ value, arithmeticOperator }) => [

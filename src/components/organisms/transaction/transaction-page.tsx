@@ -9,27 +9,26 @@ import { TransactionsDetailsList } from './transactions-list';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { Filter, Transaction } from '@/service/interfaces';
 import { TransactionFilter } from '@/components/organisms/transaction/transaction-filter';
+import { useQuery } from '@tanstack/react-query';
 import { TransactionService } from '@/service/transaction';
 
+const initialFilter: Filter = {
+  dateInitial: '',
+  dateFinal: '',
+  value: 0,
+  type: '',
+  from: '',
+  to: '',
+  anexo: undefined,
+};
+
 export function TransactionPage() {
-  const { transactions, removeTransaction, accounts } = useTransactionContext();
+  const { removeTransaction, accounts } = useTransactionContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filteredTransactions, setFilteredTransactions] =
-    useState<Transaction[]>();
+  const [filter, setFilter] = useState<Filter>(initialFilter);
+
   const [transactionId, setTransactionId] =
     useState<Transaction['id']>(undefined);
-
-  const filterTransactions = async (filter: Filter) => {
-    try {
-      const response = await TransactionService.getStatement(
-        accounts[0].id,
-        filter
-      );
-      setFilteredTransactions(response.result.transactions);
-    } catch (error) {
-      console.log('Erro ao filtrar transações:', error);
-    }
-  };
 
   const openModal = (id?: Transaction['id']) => {
     setTransactionId(id);
@@ -40,19 +39,35 @@ export function TransactionPage() {
     setIsModalOpen(false);
   };
 
-  const exclude = (id: Transaction['id']) => {
-    removeTransaction(id);
+  function fetchTodoList() {
+    return TransactionService.getStatement(accounts[0].id);
+  }
+
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ['paulo', JSON.stringify(filter)],
+    queryFn: fetchTodoList,
+  });
+
+  if (isPending) return 'Loading...';
+  if (isError) return `Error: ${error.message}`;
+
+  const onFilter = async () => {
+    console.log(filter, 'filter');
   };
 
-  const getTransaction = () => {
-    return filteredTransactions || transactions || [];
+  const onChangeFilter = (filter: Filter) => {
+    setFilter(filter);
   };
 
   return (
     <>
       <div className="transactions">
         <div className="row">
-          <TransactionFilter filterTransactions={filterTransactions} />
+          <TransactionFilter
+            filter={filter}
+            onClick={onFilter}
+            onChange={onChangeFilter}
+          />
           <div className="d-flex flex-row justify-content-between">
             <span className="transactions-title">Transações recentes</span>
             <Button
@@ -62,11 +77,11 @@ export function TransactionPage() {
             ></Button>
           </div>
         </div>
-        {getTransaction().length > 0 ? (
+        {data?.result.transactions.length > 0 ? (
           <TransactionsDetailsList
-            transactionsList={getTransaction()}
+            transactionsList={data?.result.transactions}
             edit={openModal}
-            exclude={exclude}
+            exclude={removeTransaction}
           />
         ) : (
           <div className="transactions-none">

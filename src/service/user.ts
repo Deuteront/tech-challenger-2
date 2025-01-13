@@ -7,8 +7,6 @@ import {
 import { service } from '@/service/facade';
 import { getFromStorage } from '@/utils/storage';
 
-const token = getFromStorage('authToken') as string;
-
 const createUser = async (
   username: string,
   email: string,
@@ -35,7 +33,10 @@ const authenticateUser = async (
 };
 
 const getAccount = async (): Promise<AccountResponse> => {
-  return service.get<AccountResponse, null>('/account', token);
+  return service.get<AccountResponse, null>(
+    '/account',
+    getFromStorage('authToken') as string
+  );
 };
 
 export const UserService = {
