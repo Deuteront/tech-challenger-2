@@ -6,6 +6,7 @@ import { getMovementOptionByType } from '@/components/organisms/modal-transactio
 import dayjs, { Dayjs } from 'dayjs';
 import { CustomDateRangePicker } from '@/components/atoms/date-range-picker/date-range-picker';
 import { Button } from '@/components/atoms/button/button';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Props {
   onChange: (filter: Filter) => void;
@@ -18,6 +19,7 @@ export function TransactionFilter({ onChange, filter }: Props) {
   const [openPopover, setOpenPopover] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openDate, setOpenDate] = useState<boolean>(false);
+  const [text, setText] = useState<string>('');
   const [dates, setDates] = useState<Dayjs[]>([dayjs(), dayjs()]);
 
   const handleOpenPopover = (
@@ -115,204 +117,247 @@ export function TransactionFilter({ onChange, filter }: Props) {
     handleClosePopover();
   };
 
+  const getLabelDataFilter = () => {
+    if (dateInitial && dateFinal) {
+      return `${dayjs(dateInitial).format('DD/MM/YYYY')} - ${dayjs(
+        dateFinal
+      ).format('DD/MM/YYYY')}`;
+    } else if (dateInitial) {
+      return dayjs(dateInitial).format('DD/MM/YYYY');
+    } else if (dateFinal) {
+      return dayjs(dateFinal).format('DD/MM/YYYY');
+    } else {
+      return 'Selecionar Data';
+    }
+  };
+
   return (
-    <div className={'transactions-filter'}>
-      <Chip
-        label={'Selecionar Data'}
-        icon={<ArrowDropDown />}
-        onClick={(e) => handleOpenPopover(e, 'date')}
-        style={{ cursor: 'pointer' }}
-      />
-      <Popover
-        open={openPopover === 'date'}
-        anchorEl={anchorEl}
-        onClose={handleClosePopover}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        disableScrollLock
-      >
-        <div className="container-filter-date">
+    <>
+      <div className={'transactions-filter'}>
+        <Chip
+          label={getLabelDataFilter()}
+          icon={
+            <ArrowDropDown
+              className={!!dateInitial || !!dateFinal ? 'selected-value' : ''}
+            />
+          }
+          onDelete={
+            !!dateInitial || !!dateFinal
+              ? () => onChange({ ...filter, dateInitial: '', dateFinal: '' })
+              : undefined
+          }
+          className={!!dateInitial || !!dateFinal ? 'selected-value' : ''}
+          onClick={(e) => handleOpenPopover(e, 'date')}
+          style={{ cursor: 'pointer' }}
+        />
+        <Popover
+          open={openPopover === 'date'}
+          anchorEl={anchorEl}
+          onClose={handleClosePopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          disableScrollLock
+        >
+          <div className="container-filter-date">
+            <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+              <li
+                className={'button-filter'}
+                onClick={() => handleDateFilterChange('hoje')}
+              >
+                Hoje
+              </li>
+              <li
+                className={'button-filter'}
+                onClick={() => handleDateFilterChange('ultimos7dias')}
+              >
+                Últimos 7 dias
+              </li>
+              <li
+                className={'button-filter'}
+                onClick={() => handleDateFilterChange('ultimos30dias')}
+              >
+                Últimos 30 dias
+              </li>
+              <li
+                className={'button-filter'}
+                onClick={() => handleDateFilterChange('esseano')}
+              >
+                Este ano
+              </li>
+              <li
+                className={'button-filter'}
+                onClick={() => handleDateFilterChange('personalizado')}
+              >
+                Personalizado
+              </li>
+            </ul>
+            {openDate && (
+              <div
+                style={{
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <div className={'container-date'}>
+                  <CustomDateRangePicker
+                    labelStart="Data Inicial"
+                    labelEnd="Data Final"
+                    value={{ start: dayjs(dates[0]), end: dayjs(dates[1]) }}
+                    onChange={({ start, end }) =>
+                      setDates([start, end] as [Dayjs, Dayjs])
+                    }
+                  ></CustomDateRangePicker>
+                </div>
+                <div className={'button-apply-left'}>
+                  <Button className={['button-date']} onClick={sendDateFilter}>
+                    Aplicar
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </Popover>
+
+        <Chip
+          label={getMovementOptionByType(type) || 'Movimentação'}
+          icon={<ArrowDropDown className={!!type ? 'selected-value' : ''} />}
+          className={!!type ? 'selected-value' : ''}
+          onClick={(e) => handleOpenPopover(e, 'type')}
+          style={{ cursor: 'pointer' }}
+          onDelete={
+            !!type ? () => onChange({ ...filter, type: '' }) : undefined
+          }
+        />
+        <Popover
+          open={openPopover === 'type'}
+          anchorEl={anchorEl}
+          onClose={handleClosePopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          disableScrollLock
+        >
           <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
             <li
               className={'button-filter'}
-              onClick={() => handleDateFilterChange('hoje')}
-            >
-              Hoje
-            </li>
-            <li
-              className={'button-filter'}
-              onClick={() => handleDateFilterChange('ultimos7dias')}
-            >
-              Últimos 7 dias
-            </li>
-            <li
-              className={'button-filter'}
-              onClick={() => handleDateFilterChange('ultimos30dias')}
-            >
-              Últimos 30 dias
-            </li>
-            <li
-              className={'button-filter'}
-              onClick={() => handleDateFilterChange('esseano')}
-            >
-              Este ano
-            </li>
-            <li
-              className={'button-filter'}
-              onClick={() => handleDateFilterChange('personalizado')}
-            >
-              Personalizado
-            </li>
-          </ul>
-          {openDate && (
-            <div
-              style={{
-                padding: '16px',
-                display: 'flex',
-                flexDirection: 'column',
+              onClick={() => {
+                onChange({ ...filter, type: 'Debit' });
+                handleClosePopover();
               }}
             >
-              <div className={'container-date'}>
-                <CustomDateRangePicker
-                  labelStart="Data Inicial"
-                  labelEnd="Data Final"
-                  value={{ start: dayjs(dates[0]), end: dayjs(dates[1]) }}
-                  onChange={({ start, end }) =>
-                    setDates([start, end] as [Dayjs, Dayjs])
-                  }
-                ></CustomDateRangePicker>
-              </div>
-              <div className={'button-apply-left'}>
-                <Button className={['button-date']} onClick={sendDateFilter}>
-                  Aplicar
-                </Button>
-              </div>
+              Saída
+            </li>
+            <li
+              className={'button-filter'}
+              onClick={() => {
+                onChange({ ...filter, type: 'Credit' });
+                handleClosePopover();
+              }}
+              style={{ textTransform: 'none' }}
+            >
+              Entrada
+            </li>
+          </ul>
+        </Popover>
+
+        <Chip
+          label={'Valor'}
+          className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
+          onClick={(e) => handleOpenPopover(e, 'range')}
+          onDelete={
+            valueFinal + valueInitial > 0
+              ? () =>
+                  onChange({
+                    ...filter,
+                    valueInitial: 0,
+                    valueFinal: 0,
+                  })
+              : undefined
+          }
+          style={{ cursor: 'pointer' }}
+          icon={
+            <ArrowDropDown
+              className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
+            />
+          }
+        />
+        <Popover
+          open={openPopover === 'range'}
+          anchorEl={anchorEl}
+          onClose={handleClosePopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          disableScrollLock
+        >
+          <div className={'range-container'}>
+            <div className={'container-input-slider'}>
+              <span className={'money'}>R$</span>
+              <input
+                type="number"
+                className={'input-slider'}
+                value={valueInitial}
+                onChange={(e) => handleInputChange(Number(e.target.value), 0)}
+                min={0}
+                max={50000}
+              />
             </div>
-          )}
-        </div>
-      </Popover>
-
-      <Chip
-        label={getMovementOptionByType(type) || 'Movimentação'}
-        icon={<ArrowDropDown className={!!type ? 'selected-value' : ''} />}
-        className={!!type ? 'selected-value' : ''}
-        onClick={(e) => handleOpenPopover(e, 'type')}
-        style={{ cursor: 'pointer' }}
-        onDelete={!!type ? () => onChange({ ...filter, type: '' }) : undefined}
-      />
-      <Popover
-        open={openPopover === 'type'}
-        anchorEl={anchorEl}
-        onClose={handleClosePopover}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        disableScrollLock
-      >
-        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-          <li
-            className={'button-filter'}
-            onClick={() => {
-              onChange({ ...filter, type: 'Debit' });
-              handleClosePopover();
-            }}
-          >
-            Saída
-          </li>
-          <li
-            className={'button-filter'}
-            onClick={() => {
-              onChange({ ...filter, type: 'Credit' });
-              handleClosePopover();
-            }}
-            style={{ textTransform: 'none' }}
-          >
-            Entrada
-          </li>
-        </ul>
-      </Popover>
-
-      <Chip
-        label={'Valor'}
-        className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
-        onClick={(e) => handleOpenPopover(e, 'range')}
-        onDelete={
-          valueFinal + valueInitial > 0
-            ? () =>
-                onChange({
-                  ...filter,
-                  valueInitial: 0,
-                  valueFinal: 0,
-                })
-            : undefined
-        }
-        style={{ cursor: 'pointer' }}
-        icon={
-          <ArrowDropDown
-            className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
-          />
-        }
-      />
-      <Popover
-        open={openPopover === 'range'}
-        anchorEl={anchorEl}
-        onClose={handleClosePopover}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        disableScrollLock
-      >
-        <div className={'range-container'}>
-          <div className={'container-input-slider'}>
-            <span className={'money'}>R$</span>
-            <input
-              type="number"
-              className={'input-slider'}
-              value={valueInitial}
-              onChange={(e) => handleInputChange(Number(e.target.value), 0)}
+            <Slider
+              value={[valueInitial, valueFinal]}
+              onChange={handleSliderChange}
+              valueLabelDisplay="auto"
               min={0}
               max={50000}
+              size={'medium'}
+              color={'primary'}
+              marks={[{ value: 0 }, { value: 50000 }]}
             />
+            <div className={'container-input-slider'}>
+              <span className={'money'}>R$</span>
+              <input
+                type="number"
+                className={'input-slider'}
+                value={valueFinal}
+                onChange={(e) => handleInputChange(Number(e.target.value), 1)}
+                min={0}
+                max={50000}
+              />
+            </div>
           </div>
-          <Slider
-            value={[valueInitial, valueFinal]}
-            onChange={handleSliderChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={50000}
-            size={'medium'}
-            color={'primary'}
-            marks={[{ value: 0 }, { value: 50000 }]}
-          />
-          <div className={'container-input-slider'}>
-            <span className={'money'}>R$</span>
-            <input
-              type="number"
-              className={'input-slider'}
-              value={valueFinal}
-              onChange={(e) => handleInputChange(Number(e.target.value), 1)}
-              min={0}
-              max={50000}
-            />
-          </div>
-        </div>
-      </Popover>
-    </div>
+        </Popover>
+      </div>
+      <div className={'search-container'}>
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          className={'search-input'}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <span
+          className={'button-search'}
+          onClick={() => onChange({ ...filter, text })}
+        >
+          <SearchIcon />
+        </span>
+      </div>
+    </>
   );
 }

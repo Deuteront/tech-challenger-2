@@ -59,11 +59,6 @@ export function TransactionPage() {
     <>
       <div className="transactions">
         <div className="row">
-          <TransactionFilter
-            filter={filter}
-            onClick={onFilter}
-            onChange={onChangeFilter}
-          />
           <div className="d-flex flex-row justify-content-between">
             <span className="transactions-title">Transações recentes</span>
             <Button
@@ -73,6 +68,11 @@ export function TransactionPage() {
             ></Button>
           </div>
         </div>
+        <TransactionFilter
+          filter={filter}
+          onClick={onFilter}
+          onChange={onChangeFilter}
+        />
         {isPending ? (
           <div className="transactions-none">
             <span>Carregando?</span>
