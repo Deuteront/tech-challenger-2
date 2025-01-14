@@ -25,7 +25,6 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateAccountBalance = async () => {
     try {
       const { result: userBalance } = await UserService.getAccount();
-      console.log(userBalance);
 
       if (!userBalance || !userBalance.account || !userBalance.transactions) {
         console.error('Dados de conta ou transações ausentes');

@@ -15,10 +15,10 @@ import { TransactionService } from '@/service/transaction';
 const initialFilter: Filter = {
   dateInitial: '',
   dateFinal: '',
-  value: 0,
+  valueFinal: 0,
+  valueInitial: 0,
+  text: '',
   type: '',
-  from: '',
-  to: '',
   anexo: undefined,
 };
 
@@ -47,10 +47,6 @@ export function TransactionPage() {
     queryKey: ['paulo', JSON.stringify(filter)],
     queryFn: fetchTodoList,
   });
-
-  if (isPending) return 'Loading...';
-  if (isError) return `Error: ${error.message}`;
-
   const onFilter = async () => {
     console.log(filter, 'filter');
   };
@@ -77,7 +73,15 @@ export function TransactionPage() {
             ></Button>
           </div>
         </div>
-        {data?.result.transactions.length > 0 ? (
+        {isPending ? (
+          <div className="transactions-none">
+            <span>Carregando?</span>
+          </div>
+        ) : isError ? (
+          <div className="transactions-none">
+            <span>Error: {error.message}</span>
+          </div>
+        ) : data?.result.transactions.length !== 0 ? (
           <TransactionsDetailsList
             transactionsList={data?.result.transactions}
             edit={openModal}

@@ -16,8 +16,11 @@ export const MOVEMENT_TYPE = {
 export const MOVEMENT_OPTIONS = [
   { value: MOVEMENT_TYPE.credit, text: 'Entrada', arithmeticOperator: '+' },
   { value: MOVEMENT_TYPE.debit, text: 'Saída', arithmeticOperator: '-' },
+  { value: '', text: '', arithmeticOperator: '-' },
 ];
-
+export const getMovementOptionByType = (type: 'Credit' | 'Debit' | '') => {
+  return MOVEMENT_OPTIONS.find((option) => option.value === type)?.text;
+};
 const arithmeticOperatorMap = new Map(
   MOVEMENT_OPTIONS.map(({ value, arithmeticOperator }) => [
     value,

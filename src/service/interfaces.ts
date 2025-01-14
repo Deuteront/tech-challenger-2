@@ -7,11 +7,11 @@ interface User {
 
 interface Filter {
   type: Transaction['type'] | '';
-  value: number;
-  dateInitial: string;
-  dateFinal: string;
-  from: string;
-  to: string;
+  valueInitial: number;
+  valueFinal: number;
+  dateInitial?: string;
+  dateFinal?: string;
+  text: string;
   anexo: boolean | undefined;
 }
 
