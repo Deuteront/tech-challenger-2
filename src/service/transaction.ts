@@ -19,12 +19,12 @@ const getStatement = async (
   filter?: Filter
 ): Promise<{
   message: string;
-  result: { transactions: Transaction[] };
+  result: { transactions: Transaction[]; lastPage: { nextPage?: true } };
 }> => {
   return service.get<
     {
       message: string;
-      result: { transactions: Transaction[] };
+      result: { transactions: Transaction[]; lastPage: { nextPage?: true } };
     },
     Filter
   >(`/account/${accountId}/statement`, token, filter);

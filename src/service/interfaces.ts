@@ -7,12 +7,14 @@ interface User {
 
 interface Filter {
   type: Transaction['type'] | '';
-  valueInitial: number;
-  valueFinal: number;
+  valueInitial?: number;
+  valueFinal?: number;
   dateInitial?: string;
   dateFinal?: string;
-  text: string;
-  anexo: boolean | undefined;
+  text?: string;
+  anexo?: boolean;
+  page?: number;
+  pageSize?: number;
 }
 
 interface authUser {

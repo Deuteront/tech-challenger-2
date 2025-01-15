@@ -10,7 +10,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface Props {
   onChange: (filter: Filter) => void;
-  onClick: () => void;
   filter: Filter;
 }
 
@@ -274,10 +273,12 @@ export function TransactionFilter({ onChange, filter }: Props) {
 
         <Chip
           label={'Valor'}
-          className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
+          className={
+            (valueFinal || 0) + (valueInitial || 0) > 0 ? 'selected-value' : ''
+          }
           onClick={(e) => handleOpenPopover(e, 'range')}
           onDelete={
-            valueFinal + valueInitial > 0
+            (valueFinal || 0) + (valueInitial || 0) > 0
               ? () =>
                   onChange({
                     ...filter,
@@ -289,7 +290,11 @@ export function TransactionFilter({ onChange, filter }: Props) {
           style={{ cursor: 'pointer' }}
           icon={
             <ArrowDropDown
-              className={valueFinal + valueInitial > 0 ? 'selected-value' : ''}
+              className={
+                (valueFinal || 0) + (valueInitial || 0) > 0
+                  ? 'selected-value'
+                  : ''
+              }
             />
           }
         />
@@ -320,7 +325,7 @@ export function TransactionFilter({ onChange, filter }: Props) {
               />
             </div>
             <Slider
-              value={[valueInitial, valueFinal]}
+              value={[valueInitial || 0, valueFinal || 0]}
               onChange={handleSliderChange}
               valueLabelDisplay="auto"
               min={0}

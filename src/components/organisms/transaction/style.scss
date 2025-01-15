@@ -26,7 +26,7 @@
 }
 
 .transactions-list {
-  height: 242px;
+  height: 270px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -42,6 +42,10 @@
   .transactions-type {
     font-size: 14px;
     color: #635D6C;
+
+    &.anexo {
+      cursor: pointer;
+    }
   }
 }
 
@@ -69,7 +73,7 @@
 .transaction {
   display: flex;
   gap: 14px;
-  padding: 12px 0;
+  padding: 12px;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
@@ -289,6 +293,7 @@ input[type="number"].input-slider::-webkit-inner-spin-button {
   background: #F8EBEC;
   border: none;
   cursor: pointer;
+
   &:focus {
     outline: none;
   }
@@ -303,7 +308,8 @@ input[type="number"].input-slider::-webkit-inner-spin-button {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  & svg{
+
+  & svg {
     fill: rgba(0, 0, 0, 0.75);
     width: 24px;
     height: 24px;

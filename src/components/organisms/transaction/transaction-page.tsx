@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './style.scss';
 import { Button } from '@/components/atoms/button/button';
 import ModalWrapper from '@/components/atoms/modal-wrapper/modal-wrapper';
@@ -9,7 +9,7 @@ import { TransactionsDetailsList } from './transactions-list';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { Filter, Transaction } from '@/service/interfaces';
 import { TransactionFilter } from '@/components/organisms/transaction/transaction-filter';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { TransactionService } from '@/service/transaction';
 
 const initialFilter: Filter = {
@@ -40,16 +40,13 @@ export function TransactionPage() {
   };
 
   function fetchTodoList() {
-    return TransactionService.getStatement(accounts[0].id);
+    return TransactionService.getStatement(accounts[0].id, filter);
   }
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['paulo', JSON.stringify(filter)],
     queryFn: fetchTodoList,
   });
-  const onFilter = async () => {
-    console.log(filter, 'filter');
-  };
 
   const onChangeFilter = (filter: Filter) => {
     setFilter(filter);
@@ -68,11 +65,7 @@ export function TransactionPage() {
             ></Button>
           </div>
         </div>
-        <TransactionFilter
-          filter={filter}
-          onClick={onFilter}
-          onChange={onChangeFilter}
-        />
+        <TransactionFilter filter={filter} onChange={onChangeFilter} />
         {isPending ? (
           <div className="transactions-none">
             <span>Carregando?</span>

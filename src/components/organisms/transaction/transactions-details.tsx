@@ -7,13 +7,14 @@ import dayjs from 'dayjs';
 import { TransactionModal } from '@/components/organisms/modal-transaction/modal-transaction.interface';
 import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
 import { TransactionService } from '@/service/transaction';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 export function TransactionsDetails({
   transaction,
   edit,
   exclude,
 }: TransactionModal) {
-  const { date, id, value, type, to, from, anexo, account } = transaction;
+  const { date, id, value, type, to, from, anexo } = transaction;
 
   const downloadAnexo = async () => {
     await TransactionService.downloadAnexo(anexo as string);
@@ -30,18 +31,20 @@ export function TransactionsDetails({
         />
 
         <div className="flex-column">
-          {account && (
-            <div className="transactions-list-title">Conta: {account.type}</div>
-          )}
-          {anexo && (
-            <button onClick={downloadAnexo} className="transactions-type">
-              Anexo: {anexo as string}
-            </button>
-          )}
+          <div className="transactions-list-title">
+            <div>
+              {type === MOVEMENT_TYPE.credit ? 'Entrada' : 'Saida'}{' '}
+              {anexo && (
+                <AttachFileIcon
+                  onClick={downloadAnexo}
+                  className="transactions-type anexo"
+                />
+              )}
+            </div>
+            {to && <div className="transactions-type">Origem: {to}</div>}
+            {from && <div className="transactions-type">Destino: {from}</div>}
+          </div>
         </div>
-
-        {to && <div className="transactions-type">Entrada: {to}</div>}
-        {from && <div className="transactions-type">Saída: {from}</div>}
       </div>
       <div className="transaction-desc">
         <div className="transaction-info">

@@ -41,7 +41,7 @@ export function Body({ children }: { children: React.ReactNode }) {
   ];
 
   const totalValue =
-    'R$ ' + ((totalIncoming || 0) + (totalOutgoing || 0)).toFixed(2);
+    'R$ ' + ((totalIncoming || 0) - (totalOutgoing || 0)).toFixed(2);
 
   const addClassInvisible = () => {
     setVisibleValues(!visibleValues);
