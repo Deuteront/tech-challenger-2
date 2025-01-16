@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './style.scss';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import localizedFormat from 'dayjs/plugin/localizedFormat';

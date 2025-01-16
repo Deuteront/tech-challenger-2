@@ -1,6 +1,5 @@
 import React from 'react';
 import { Props } from '@/components/atoms/select/select.interface';
-import './style.scss';
 import {
   FormControl,
   FormHelperText,

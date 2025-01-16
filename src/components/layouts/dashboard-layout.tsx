@@ -3,7 +3,7 @@
 import React from 'react';
 import { TransactionProvider } from '@/components/organisms/providers/transaction-context';
 import { Header } from '@/components/organisms/home/header/header';
-import { useAuth } from '@/app/auth-context';
+import { useAuth } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { Body } from '@/components/organisms/home/body/body';
 

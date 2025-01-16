@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import { Logo } from '@/components/organisms/logo/logo';
 import { LogoUser } from '@/components/organisms/logo-user/logoUser';
 

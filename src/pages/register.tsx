@@ -4,7 +4,6 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/atoms/input/input';
 import { Logo } from '@/components/organisms/logo/logo';
-import './style.scss';
 import { Button } from '@/components/atoms/button/button';
 import { UserService } from '@/service/user';
 import { Header } from '@/components/organisms/home/header/header';

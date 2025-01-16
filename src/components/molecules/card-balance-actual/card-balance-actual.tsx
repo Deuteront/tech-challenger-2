@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import Image from 'next/image';
 import { props } from '@/components/molecules/card-balance-actual/card-balance-actual.type';
 

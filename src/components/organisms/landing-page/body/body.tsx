@@ -1,18 +1,19 @@
 import React from 'react';
-import './style.scss';
 import { Button } from '@/components/atoms/button/button';
 import Image from 'next/image';
 import { AdvantageList } from '@/components/molecules/advantage/advantage-list';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/app/auth-context';
+import dynamic from 'next/dynamic';
 
 export function Body() {
   const router = useRouter();
-  const { isAuth } = useAuth();
 
-  const handleDashboard = () =>
-    isAuth ? router.push('/dashboard') : router.push('/login');
+  // const RemoteLandingPage = dynamic(() => import('landingPage/App'), {
+  //   ssr: false,
+  // });
+
+  const handleDashboard = () => router.push('/login');
   const advantages = [
     {
       text: 'Relatórios e análises em tempo real',
@@ -66,6 +67,8 @@ export function Body() {
         </div>
       </div>
       {<AdvantageList advantage={advantages} className="advantage-list" />}
+
+      {/*<RemoteLandingPage />*/}
     </div>
   );
 }

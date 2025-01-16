@@ -4,10 +4,9 @@ import React from 'react';
 import { Input } from '@/components/atoms/input/input';
 import { Logo } from '@/components/organisms/logo/logo';
 import { Button } from '@/components/atoms/button/button';
-import './style.scss';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/organisms/home/header/header';
-import { useAuth } from '@/app/auth-context';
+import { useAuth } from '@/context/auth-context';
 
 const Login: React.FC = () => {
   const { login } = useAuth();

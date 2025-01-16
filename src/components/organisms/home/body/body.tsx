@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import './style.scss';
 import { WelcomeMessage } from '@/components/organisms/home/welcome-message/welcome-message';
 import { FinancialDashboardList } from '@/components/molecules/financial-dashboard/financial-deshboard-list';
 import { CardBalanceActual } from '@/components/molecules/card-balance-actual/card-balance-actual';
 import { useTransactionContext } from '@/components/organisms/providers/transaction-context';
 import { MOVEMENT_TYPE } from '@/components/organisms/modal-transaction/constants';
+import { HomeChartBar } from '@/components/molecules/chart/home-chart-bar';
 
 export function Body({ children }: { children: React.ReactNode }) {
   const { transactions } = useTransactionContext();
@@ -63,6 +63,11 @@ export function Body({ children }: { children: React.ReactNode }) {
                   financialDashboard={financialDashboards}
                   className="financial-dashboard-list"
                 />
+                <div className="financialDashboard chart">
+                  {transactions.length > 0 && (
+                    <HomeChartBar transactions={transactions}></HomeChartBar>
+                  )}
+                </div>
               </div>
               <div className="separation"></div>
               {children}

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './style.scss';
 
 interface Props {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

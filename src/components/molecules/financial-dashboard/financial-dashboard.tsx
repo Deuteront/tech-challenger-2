@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import Image from 'next/image';
 import { props } from '@/components/molecules/financial-dashboard/financial-dashboard.type';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import Image from 'next/image';
 import { Button } from '@/components/atoms/button/button';
 import Tooltip from '@mui/material/Tooltip';

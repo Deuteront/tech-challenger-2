@@ -1,6 +1,5 @@
 import React from 'react';
 import { Props } from '@/components/atoms/button/button.interface';
-import './style.scss';
 import Image from 'next/image';
 
 export function Button({

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import './global.scss';
-import { AuthProvider } from '@/app/auth-context';
+import { AuthProvider } from '@/context/auth-context';
 import { QueryProvider } from '@/components/organisms/providers/query-provider';
 
 export const metadata = {

@@ -1,7 +1,5 @@
 import React from 'react';
-import './style.scss';
 import { FormControlLabel, Checkbox, FormHelperText } from '@mui/material';
-import './style.scss';
 
 interface CustomCheckboxProps {
   label: string;

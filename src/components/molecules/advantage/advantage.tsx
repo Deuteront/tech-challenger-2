@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import Image from 'next/image';
 import { Props } from '@/components/molecules/advantage/advantage.interface';
 

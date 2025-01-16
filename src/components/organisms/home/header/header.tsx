@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import './style.scss';
 import { Logo } from '@/components/organisms/logo/logo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

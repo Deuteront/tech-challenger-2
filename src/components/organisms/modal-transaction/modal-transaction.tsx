@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { CustomSelect } from '@/components/atoms/select/select';
-import './style.scss';
 import { InputCurrency } from '@/components/molecules/input-currency/input-currency';
 import { initialTransactionData, MOVEMENT_OPTIONS } from './constants';
 import { Errors } from '@/components/organisms/modal-transaction/modal-transaction.interface';

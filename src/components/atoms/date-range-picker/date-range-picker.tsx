@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/pt-br';
 import { CustomDatePicker } from '@/components/atoms/datepicker/datepicker';

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import './style.scss';
 import { Button } from '@/components/atoms/button/button';
 import ModalWrapper from '@/components/atoms/modal-wrapper/modal-wrapper';
 import ModalTransaction from '@/components/organisms/modal-transaction/modal-transaction';
